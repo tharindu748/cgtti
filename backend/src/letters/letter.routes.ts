@@ -1,0 +1,14 @@
+import express from 'express';
+import { generateLetters, getGeneratedLetters, getTemplates, createTemplate } from './letter.controller';
+import { authMiddleware } from '@auth/auth.middleware';
+
+const router = express.Router();
+
+router.use(authMiddleware);
+
+router.get('/templates', getTemplates);
+router.post('/templates', createTemplate);
+router.post('/generate', generateLetters);
+router.get('/generated', getGeneratedLetters);
+
+export default router;

@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(MEMBER)
+  member    Member?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Member {
+  id                String   @id @default(cuid())
+  trainingNumber    String   @unique
+  membershipYear    Int
+  trade             Trade
+  name              String
+  district          String
+  membershipNumber  String   @unique
+  address           String
+  mobile            String
+  nic               String  
+  email             String?
+  paymentStatus     PaymentStatus @default(NON_PAID)
+  livingStatus      LivingStatus @default(ALIVE)
+  isVerified        Boolean  @default(false) // Add this line
+  userId            String?  @unique
+  user              User?    @relation(fields: [userId], references: [id])
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("members")
+  GeneratedLetter GeneratedLetter[]
+}
+
+model LetterTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  subject     String
+  content     String
+  createdBy   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("letter_templates")
+  GeneratedLetter GeneratedLetter[]
+}
+
+model GeneratedLetter {
+  id          String   @id @default(cuid())
+  memberId    String
+  member      Member   @relation(fields: [memberId], references: [id])
+  templateId  String?
+  template    LetterTemplate? @relation(fields: [templateId], references: [id])
+  subject     String
+  content     String
+  reason      String
+  generatedBy String
+  createdAt   DateTime @default(now())
+
+  @@map("generated_letters")
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+enum Trade {
+  TOOL_MACHINE
+  MILLWRIGHT
+  AUTO_MOBILE
+  BBP
+  AUTO_ELECTRICAL
+  REF_AND_AC
+  MECHATRONIC
+  DISAL_PUMP
+  WELDING
+  POWER_ELECTRICAL
+}
+
+enum PaymentStatus {
+  PAID
+  NON_PAID
+}
+
+enum LivingStatus {
+  ALIVE
+  DECEASED
+}
