@@ -48,16 +48,6 @@ export const Dashboard: React.FC = () => {
           <p className="text-xs mt-2 text-gray-400">All registered users</p>
         </div>
 
-        {/* MECHATRONIC Card (New) */}
-        <div className="bg-white p-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-xl border-t-4 border-teal-500">
-          <div className="flex justify-between items-start">
-            <h3 className="text-sm font-medium uppercase tracking-wider text-gray-500">Mechatronic Students</h3>
-            <span className="text-2xl text-teal-500">🤖</span>
-          </div>
-          <p className="mt-1 text-4xl font-extrabold text-teal-700">0</p>
-          <p className="text-xs mt-2 text-gray-400">Enrolled in Mechatronics</p>
-        </div>
-
         {/* Active Members Card (Retained) */}
         <div className="bg-white p-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-xl border-t-4 border-yellow-500">
           <div className="flex justify-between items-start">
@@ -68,15 +58,7 @@ export const Dashboard: React.FC = () => {
           <p className="text-xs mt-2 text-gray-400">Recently active users</p>
         </div>
 
-        {/* WELDING Card (New) */}
-        <div className="bg-white p-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-xl border-t-4 border-red-500">
-          <div className="flex justify-between items-start">
-            <h3 className="text-sm font-medium uppercase tracking-wider text-gray-500">Welding Students</h3>
-            <span className="text-2xl text-red-500">🔥</span>
-          </div>
-          <p className="mt-1 text-4xl font-extrabold text-red-700">0</p>
-          <p className="text-xs mt-2 text-gray-400">Enrolled in Welding</p>
-        </div>
+
       </div>
       
       {/* Example of adding the remaining trades in a separate, responsive section */}
@@ -84,6 +66,8 @@ export const Dashboard: React.FC = () => {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         {[
           { key: 'TOOL_MACHINE', label: 'Tool & Machine', color: 'indigo' },
+          {key: 'welding', label: 'Welding', color: 'red' },
+          {key: 'mechatronic', label: 'Mechatronic', color: 'teal' },
           { key: 'MILLWRIGHT', label: 'Millwright', color: 'amber' },
           { key: 'AUTO_MOBILE', label: 'Automobile', color: 'green' },
           { key: 'BBP', label: 'BBP', color: 'pink' },
