@@ -1,6 +1,6 @@
 import express from 'express';
 import { generateLetters, getGeneratedLetters, getTemplates, createTemplate } from './letter.controller';
-import { authMiddleware } from '@auth/auth.middleware';
+import { authMiddleware } from '../auth/auth.middleware.js';
 
 const router = express.Router();
 
