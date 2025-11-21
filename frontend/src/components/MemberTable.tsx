@@ -525,18 +525,21 @@ export const MemberTable: React.FC<MemberTableProps> = ({ refreshTrigger }) => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     District
                   </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Address
+                  </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Year
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Mobile
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Payment
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  </th> */}
+                  {/* <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
-                  </th>
+                  </th> */}
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
@@ -615,13 +618,16 @@ export const MemberTable: React.FC<MemberTableProps> = ({ refreshTrigger }) => {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {member.district}
                       </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {member.address}
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {member.membershipYear}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                         {member.mobile}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      {/* <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                           member.paymentStatus === 'PAID' 
                             ? 'bg-green-100 text-green-800'
@@ -629,8 +635,8 @@ export const MemberTable: React.FC<MemberTableProps> = ({ refreshTrigger }) => {
                         }`}>
                           {member.paymentStatus}
                         </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      </td> */}
+                      {/* <td className="px-6 py-4 whitespace-nowrap">
                         <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                           member.livingStatus === 'ALIVE' 
                             ? 'bg-green-100 text-green-800'
@@ -638,7 +644,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({ refreshTrigger }) => {
                         }`}>
                           {member.livingStatus}
                         </span>
-                      </td>
+                      </td> */}
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                         <button className="text-blue-600 hover:text-blue-900">
                           Edit

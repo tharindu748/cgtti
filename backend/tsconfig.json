@@ -20,6 +20,6 @@
       "@letters/*": ["letters/*"]
     }
   },
-  "include": ["src/**/*", "prisma/**/*"],
+  "include": ["src/**/*", "src/prisma/**/*"],
   "exclude": ["node_modules", "dist"]
 }
