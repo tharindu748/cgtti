@@ -1,7 +1,6 @@
 {
   "name": "alumni-backend",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "dev": "tsx watch src/main.ts",
     "build": "tsc",
@@ -32,7 +31,6 @@
     "typescript": "^5.9.3"
   },
   "prisma": {
-    "seed": "tsx src/seed.ts",
-    "start": "node dist/src/main.js"
+    "seed": "tsx prisma/seed.ts"
   }
 }
