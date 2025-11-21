@@ -32,7 +32,7 @@ export const Dashboard: React.FC = () => {
     <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
       {/* Header Section */}
       <h1 className="text-3xl font-extrabold text-indigo-700 mb-8 border-b pb-2">
-        📊 Trade Skills Overview
+        📊 Overview
       </h1>
 
       {/* Stats Grid - Fully Responsive */}
@@ -62,7 +62,7 @@ export const Dashboard: React.FC = () => {
       </div>
       
       {/* Example of adding the remaining trades in a separate, responsive section */}
-      <h2 className="text-2xl font-bold text-gray-700 mt-12 mb-6">⚙️ Other Trade Enrollments</h2>
+      <h2 className="text-2xl font-bold text-gray-700 mt-12 mb-6">⚙️ Trade Enrollments</h2>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         {[
           { key: 'TOOL_MACHINE', label: 'Tool & Machine', color: 'indigo' },
