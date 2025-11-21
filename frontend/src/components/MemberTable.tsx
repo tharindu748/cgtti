@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Member, Trade, District, LivingStatus, PaymentStatus, FilterOptions, PaginationOptions } from '@types';
-import { membersAPI } from '@api/members';
-import { useAuth } from '@context/AuthContext';
-// Add this import at the top of MemberTable.tsx
+import { Member, Trade, District, LivingStatus, PaymentStatus, FilterOptions, PaginationOptions } from '../types'; // Changed from '@types' to relative import
+import { membersAPI } from '../api/members'; // Changed from '@api/members'
+import { useAuth } from '../context/AuthContext'; // Changed from '@context/AuthContext'
 import { LetterComposer } from './LetterComposer';
 
 interface MemberTableProps {
@@ -48,8 +47,8 @@ const rowLimitOptions = [10, 25, 50, 100];
 export const MemberTable: React.FC<MemberTableProps> = ({ refreshTrigger }) => {
   const [members, setMembers] = useState<Member[]>([]);
   const [loading, setLoading] = useState(true);
-  // const [selectedMembers, setSelectedMembers] = useState<Member[]>([]);
-const [showLetterComposer, setShowLetterComposer] = useState(false);
+  const [showLetterComposer, setShowLetterComposer] = useState(false);
+  const [selectedMembers, setSelectedMembers] = useState<Member[]>([]); // Fixed: Store Member objects
 
   const [filters, setFilters] = useState<FilterOptions>({
     search: '',
@@ -65,7 +64,6 @@ const [showLetterComposer, setShowLetterComposer] = useState(false);
     limit: 10,
     total: 0
   });
-  const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
 
   // Statistics
   const [stats, setStats] = useState({
@@ -96,13 +94,13 @@ const [showLetterComposer, setShowLetterComposer] = useState(false);
       setMembers(data.members);
       setPagination(prev => ({ ...prev, total: data.total }));
       calculateStats(data.members);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to load members:', error);
+      alert(`Error loading members: ${error.response?.data?.message || error.message}`);
     } finally {
       setLoading(false);
     }
   };
-  
 
   const calculateStats = (membersList: Member[]) => {
     const stats = {
@@ -166,15 +164,15 @@ const [showLetterComposer, setShowLetterComposer] = useState(false);
     }
   };
 
-  const bulkVerify = async (memberIds: string[]) => {
+  const bulkVerify = async (membersToVerify: Member[]) => {
     if (!isAdmin) {
       alert('Only administrators can verify members.');
       return;
     }
 
     try {
-      const promises = memberIds.map(id => 
-        membersAPI.update(id, { isVerified: true })
+      const promises = membersToVerify.map(member => 
+        membersAPI.update(member.id, { isVerified: true })
       );
       await Promise.all(promises);
       loadMembers();
@@ -185,37 +183,21 @@ const [showLetterComposer, setShowLetterComposer] = useState(false);
     }
   };
 
-  // const toggleMemberSelection = (memberId: string) => {
-  //   setSelectedMembers(prev =>
-  //     prev.includes(memberId)
-  //       ? prev.filter(id => id !== memberId)
-  //       : [...prev, memberId]
-  //   );
-  // };
-
   const toggleMemberSelection = (member: Member) => {
-  setSelectedMembers(prev =>
-    prev.find(m => m.id === member.id)
-      ? prev.filter(m => m.id !== member.id)
-      : [...prev, member]
-  );
-};
-const toggleSelectAll = () => {
-  if (selectedMembers.length === members.length) {
-    setSelectedMembers([]);
-  } else {
-    setSelectedMembers([...members]);
-  }
-};
+    setSelectedMembers(prev =>
+      prev.some(m => m.id === member.id)
+        ? prev.filter(m => m.id !== member.id)
+        : [...prev, member]
+    );
+  };
 
-
-  // const toggleSelectAll = () => {
-  //   if (selectedMembers.length === members.length) {
-  //     setSelectedMembers([]);
-  //   } else {
-  //     setSelectedMembers(members.map(m => m.id));
-  //   }
-  // };
+  const toggleSelectAll = () => {
+    if (selectedMembers.length === members.length) {
+      setSelectedMembers([]);
+    } else {
+      setSelectedMembers([...members]);
+    }
+  };
 
   const verifySelectedMembers = () => {
     if (selectedMembers.length === 0) {
@@ -263,43 +245,43 @@ const toggleSelectAll = () => {
         </div>
 
         {selectedMembers.length > 0 && (
-  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-    <div className="flex items-center justify-between">
-      <div className="flex items-center space-x-2">
-        <span className="text-blue-800 font-medium">
-          {selectedMembers.length} member(s) selected
-        </span>
-      </div>
-      <div className="flex space-x-2">
-        <button
-          onClick={() => setShowLetterComposer(true)}
-          className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center space-x-2"
-        >
-          <span>✉️</span>
-          <span>Generate Letters</span>
-        </button>
-        <button
-          onClick={() => setSelectedMembers([])}
-          className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
-        >
-          Clear Selection
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <span className="text-blue-800 font-medium">
+                  {selectedMembers.length} member(s) selected
+                </span>
+              </div>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => setShowLetterComposer(true)}
+                  className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center space-x-2"
+                >
+                  <span>✉️</span>
+                  <span>Generate Letters</span>
+                </button>
+                <button
+                  onClick={() => setSelectedMembers([])}
+                  className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+                >
+                  Clear Selection
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
-{/* Letter Composer Modal */}
-{showLetterComposer && (
-  <LetterComposer
-    selectedMembers={selectedMembers}
-    onClose={() => setShowLetterComposer(false)}
-    onSuccess={() => {
-      setSelectedMembers([]);
-      loadMembers();
-    }}
-  />
-)}
+        {/* Letter Composer Modal */}
+        {showLetterComposer && (
+          <LetterComposer
+            selectedMembers={selectedMembers}
+            onClose={() => setShowLetterComposer(false)}
+            onSuccess={() => {
+              setSelectedMembers([]);
+              loadMembers();
+            }}
+          />
+        )}
 
         {/* Quick Action Buttons for Admin */}
         {isAdmin && (
@@ -307,9 +289,9 @@ const toggleSelectAll = () => {
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => {
-                  const nonVerifiedIds = members.filter(m => !m.isVerified).map(m => m.id);
-                  if (nonVerifiedIds.length > 0) {
-                    bulkVerify(nonVerifiedIds);
+                  const nonVerifiedMembers = members.filter(m => !m.isVerified);
+                  if (nonVerifiedMembers.length > 0) {
+                    bulkVerify(nonVerifiedMembers);
                   } else {
                     alert('All members are already verified.');
                   }
@@ -322,11 +304,11 @@ const toggleSelectAll = () => {
               
               <button
                 onClick={() => {
-                  const verifiedIds = members.filter(m => m.isVerified).map(m => m.id);
-                  if (verifiedIds.length > 0) {
-                    if (confirm(`Are you sure you want to unverify ${verifiedIds.length} member(s)?`)) {
-                      const promises = verifiedIds.map(id => 
-                        membersAPI.update(id, { isVerified: false })
+                  const verifiedMembers = members.filter(m => m.isVerified);
+                  if (verifiedMembers.length > 0) {
+                    if (confirm(`Are you sure you want to unverify ${verifiedMembers.length} member(s)?`)) {
+                      const promises = verifiedMembers.map(member => 
+                        membersAPI.update(member.id, { isVerified: false })
                       );
                       Promise.all(promises).then(() => loadMembers());
                     }
@@ -578,15 +560,15 @@ const toggleSelectAll = () => {
                       className={`hover:bg-gray-50 ${
                         !member.isVerified ? 'bg-red-50' : ''
                       } ${
-                        selectedMembers.includes(member.id) ? 'bg-blue-50' : ''
+                        selectedMembers.some(m => m.id === member.id) ? 'bg-blue-50' : ''
                       }`}
                     >
                       {/* Selection Checkbox */}
                       <td className="px-6 py-4 whitespace-nowrap">
                         <input
                           type="checkbox"
-                          checked={selectedMembers.includes(member.id)}
-                          onChange={() => toggleMemberSelection(member.id)}
+                          checked={selectedMembers.some(m => m.id === member.id)}
+                          onChange={() => toggleMemberSelection(member)}
                           className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                         />
                       </td>

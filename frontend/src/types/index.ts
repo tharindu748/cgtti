@@ -20,6 +20,7 @@ export interface Member {
   paymentStatus: PaymentStatus;
   livingStatus: LivingStatus;
   userId?: string;
+  isVerified: boolean; // ADD THIS
   createdAt: string;
   updatedAt: string;
 }
@@ -37,7 +38,35 @@ export interface MemberFormData {
   email?: string;
   paymentStatus: PaymentStatus;
   livingStatus: LivingStatus;
+  isVerified?: boolean; // ADD THIS
 }
+// Add these missing interfaces at the bottom of your types file:
+export interface FilterOptions {
+  search: string;
+  trade: string;
+  district: string;
+  membershipYear: string;
+  livingStatus: string;
+  paymentStatus: string;
+  isVerified: string;
+}
+
+export interface PaginationOptions {
+  page: number;
+  limit: number;
+  total: number;
+}
+
+export type District = 
+  | 'Colombo' | 'Gampaha' | 'Kalutara'
+  | 'Kandy' | 'Matale' | 'Nuwara Eliya'
+  | 'Galle' | 'Matara' | 'Hambantota'
+  | 'Jaffna' | 'Kilinochchi' | 'Mannar' | 'Vavuniya' | 'Mullaitivu'
+  | 'Trincomalee' | 'Batticaloa' | 'Ampara'
+  | 'Kurunegala' | 'Puttalam'
+  | 'Anuradhapura' | 'Polonnaruwa'
+  | 'Badulla' | 'Monaragala'
+  | 'Ratnapura' | 'Kegalle'
 
 export type Trade = 
   | 'TOOL_MACHINE'
