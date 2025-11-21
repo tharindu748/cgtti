@@ -34,10 +34,5 @@
   "prisma": {
     "seed": "tsx src/seed.ts",
     "start": "node dist/src/main.js"
-  },
-  "_moduleAliases": {
-    "@auth": "dist/auth",
-    "@users": "dist/users",
-    "@letters": "dist/letters"
   }
 }
