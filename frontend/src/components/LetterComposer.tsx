@@ -1084,10 +1084,10 @@
 //   );
 // };
 
-import React, { useState, useEffect } from 'react';
-import { Member, LetterTemplate, LetterFormData } from '@types';
-import { lettersAPI } from '@api/letters';
-import { useAuth } from '@context/AuthContext';
+import React, { useState } from 'react';
+import { Member, LetterTemplate, LetterFormData } from '../types';
+import { lettersAPI } from '../api/letters';
+import { useAuth } from '../context/AuthContext';
 
 interface LetterComposerProps {
   selectedMembers: Member[];
@@ -1322,8 +1322,8 @@ export const LetterComposer: React.FC<LetterComposerProps> = ({
         reason,
         isCustom,
         selectedMemberIds: selectedMembers.map(m => m.id),
-        sendEmail: emailOption !== 'none',
-        emailType: emailOption
+        // sendEmail: emailOption !== 'none',
+        // emailType: emailOption
       };
 
       await lettersAPI.generateLetters(letterData);
@@ -1368,7 +1368,7 @@ export const LetterComposer: React.FC<LetterComposerProps> = ({
         templateId: isCustom ? undefined : selectedTemplate
       };
 
-      await lettersAPI.sendTestEmail(testEmailData);
+      // await lettersAPI.sendTestEmail(testEmailData);
       alert('Test email sent successfully to ' + previewMember.email);
     } catch (error: any) {
       console.error('Failed to send test email:', error);
