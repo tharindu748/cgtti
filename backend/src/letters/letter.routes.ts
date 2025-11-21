@@ -1,5 +1,5 @@
 import express from 'express';
-import { generateLetters, getGeneratedLetters, getTemplates, createTemplate } from './letter.controller';
+import { generateLetters, getGeneratedLetters, getTemplates, createTemplate } from './letter.controller.js';
 import { authMiddleware } from '../auth/auth.middleware.js';
 
 const router = express.Router();
