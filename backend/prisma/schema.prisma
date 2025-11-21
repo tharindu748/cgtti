@@ -4,9 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // The `url` property is removed in Prisma 7+ — move your connection URL for Migrate
-  // to prisma.config.ts and pass an `adapter` or `accelerateUrl` to the PrismaClient.
-  // See: https://pris.ly/d/config-datasource and https://pris.ly/d/prisma7-client-config
+  url      = env("DATABASE_URL")
 }
 
 model User {
