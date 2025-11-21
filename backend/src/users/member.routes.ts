@@ -1,5 +1,5 @@
 import express from 'express';
-import { getMembers, createMember, updateMember, deleteMember, bulkCreateMembers  } from './member.controller';
+import { getMembers, createMember, updateMember, deleteMember, bulkCreateMembers  } from './member.controller.js';
 import { authMiddleware } from '@auth/auth.middleware';
 
 const router = express.Router();
