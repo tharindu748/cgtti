@@ -1,6 +1,7 @@
 ﻿import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import 'module-alias/register';
 
 // Import routes
 import authRoutes from '@auth/auth.routes';
