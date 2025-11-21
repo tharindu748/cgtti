@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { LetterTemplate, GeneratedLetter, LetterFormData } from '../types';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://cgtti-member.onrender.com';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
@@ -22,7 +22,7 @@ export const lettersAPI = {
   // Template management
   getTemplates: async (): Promise<LetterTemplate[]> => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/letter-templates`, getAuthHeaders());
+      const response = await axios.get(`${API_BASE}/letter-templates`, getAuthHeaders());
       return response.data;
     } catch (error: any) {
       console.error('Error fetching templates:', error.response?.data || error.message);
@@ -32,7 +32,7 @@ export const lettersAPI = {
 
   createTemplate: async (templateData: Omit<LetterTemplate, 'id' | 'createdAt' | 'updatedAt'>): Promise<LetterTemplate> => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/letter-templates`, templateData, getAuthHeaders());
+      const response = await axios.post(`${API_BASE}/letter-templates`, templateData, getAuthHeaders());
       return response.data;
     } catch (error: any) {
       console.error('Error creating template:', error.response?.data || error.message);
@@ -43,7 +43,7 @@ export const lettersAPI = {
   // Letter generation
   generateLetters: async (letterData: LetterFormData): Promise<GeneratedLetter[]> => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/letters/generate`, letterData, getAuthHeaders());
+      const response = await axios.post(`${API_BASE}/letters/generate`, letterData, getAuthHeaders());
       return response.data;
     } catch (error: any) {
       console.error('Error generating letters:', error.response?.data || error.message);
@@ -53,7 +53,7 @@ export const lettersAPI = {
 
   getGeneratedLetters: async (): Promise<GeneratedLetter[]> => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/letters/generated`, getAuthHeaders());
+      const response = await axios.get(`${API_BASE}/letters/generated`, getAuthHeaders());
       return response.data;
     } catch (error: any) {
       console.error('Error fetching generated letters:', error.response?.data || error.message);
@@ -64,7 +64,7 @@ export const lettersAPI = {
   // Export to PDF
   exportToPDF: async (letterId: string): Promise<Blob> => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/letters/${letterId}/pdf`, {
+      const response = await axios.get(`${API_BASE}/letters/${letterId}/pdf`, {
         ...getAuthHeaders(),
         responseType: 'blob'
       });

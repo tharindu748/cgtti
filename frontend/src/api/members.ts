@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Member, MemberFormData, FilterOptions } from '../types';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://cgtti-member.onrender.com';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
@@ -46,7 +46,7 @@ export const membersAPI = {
       console.log('Fetching members with params:', params.toString());
 
       const response = await axios.get(
-        `${API_BASE_URL}/members?${params.toString()}`,
+        `${API_BASE}/members?${params.toString()}`,
         getAuthHeaders()
       );
       
@@ -83,7 +83,7 @@ export const membersAPI = {
 
   create: async (memberData: MemberFormData): Promise<Member> => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/members`, memberData, getAuthHeaders());
+      const response = await axios.post(`${API_BASE}/members`, memberData, getAuthHeaders());
       return response.data;
     } catch (error: any) {
       console.error('Error creating member:', error.response?.data || error.message);
@@ -93,7 +93,7 @@ export const membersAPI = {
 
   update: async (id: string, memberData: Partial<MemberFormData>): Promise<Member> => {
     try {
-      const response = await axios.put(`${API_BASE_URL}/members/${id}`, memberData, getAuthHeaders());
+      const response = await axios.put(`${API_BASE}/members/${id}`, memberData, getAuthHeaders());
       return response.data;
     } catch (error: any) {
       console.error('Error updating member:', error.response?.data || error.message);
@@ -103,7 +103,7 @@ export const membersAPI = {
 
   delete: async (id: string): Promise<void> => {
     try {
-      await axios.delete(`${API_BASE_URL}/members/${id}`, getAuthHeaders());
+      await axios.delete(`${API_BASE}/members/${id}`, getAuthHeaders());
     } catch (error: any) {
       console.error('Error deleting member:', error.response?.data || error.message);
       throw new Error(error.response?.data?.error || 'Failed to delete member');
