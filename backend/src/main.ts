@@ -4,9 +4,9 @@ import dotenv from 'dotenv';
 
 
 // Import routes
-import authRoutes from './auth/auth.routes';
-import memberRoutes from './users/member.routes';
-import letterRoutes from './letters/letter.routes';
+import authRoutes from './auth/auth.routes.js';
+import memberRoutes from './users/member.routes.js';
+import letterRoutes from './letters/letter.routes.js';
 dotenv.config();
 
 const app = express();
