@@ -32,6 +32,7 @@
     "typescript": "^5.9.3"
   },
   "prisma": {
-    "seed": "tsx src/seed.ts"
+    "seed": "tsx src/seed.ts",
+    "start": "node dist/src/main.js"
   }
 }
