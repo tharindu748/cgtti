@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Dashboard, LogIn } from 'lucide-react';
+import { Menu, X, LayoutDashboard, LogIn } from 'lucide-react'; // Changed Dashboard to LayoutDashboard
 import { useAuth } from '../context/AuthContext';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useAuth(); // Get user from auth context
+  const { user } = useAuth();
 
   const navItems = [
     { path: '/', label: 'Home' },
@@ -20,10 +20,8 @@ export const Navbar: React.FC = () => {
 
   const handleAuthClick = () => {
     if (user) {
-      // If admin is logged in, go to dashboard
       navigate('/dashboard');
     } else {
-      // If not logged in, go to login page
       navigate('/login');
     }
     setIsOpen(false);
@@ -68,7 +66,7 @@ export const Navbar: React.FC = () => {
               Join Now
             </Link>
             
-            {/* Conditional Button: Dashboard for logged-in admin, Login for others */}
+            {/* Conditional Button */}
             <button
               onClick={handleAuthClick}
               className={`
@@ -81,7 +79,7 @@ export const Navbar: React.FC = () => {
             >
               {user ? (
                 <>
-                  <Dashboard size={18} />
+                  <LayoutDashboard size={18} /> {/* Changed to LayoutDashboard */}
                   <span>Dashboard</span>
                 </>
               ) : (
@@ -131,7 +129,6 @@ export const Navbar: React.FC = () => {
                 Join Now
               </Link>
               
-              {/* Conditional Mobile Button */}
               <button
                 onClick={handleAuthClick}
                 className={`w-full text-left block px-3 py-2 rounded-md text-base font-medium ${
@@ -141,7 +138,7 @@ export const Navbar: React.FC = () => {
                 }`}
               >
                 <div className="flex items-center">
-                  {user ? <Dashboard size={20} className="mr-2" /> : <LogIn size={20} className="mr-2" />}
+                  {user ? <LayoutDashboard size={20} className="mr-2" /> : <LogIn size={20} className="mr-2" />}
                   {user ? 'Dashboard' : 'Member Login'}
                 </div>
               </button>
