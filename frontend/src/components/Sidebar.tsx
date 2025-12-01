@@ -163,14 +163,6 @@ export const Sidebar: React.FC = () => {
                 </div>
                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
               </div>
-              {!isCollapsed && (
-                <div className="animate-slideIn">
-                  <h1 className="text-xl font-bold bg-gradient-to-r from-blue-700 to-purple-700 bg-clip-text text-transparent">
-                    CGTTI
-                  </h1>
-                  <p className="text-xs text-gray-500">Alumni Portal</p>
-                </div>
-              )}
             </div>
             
             {/* Desktop Toggle Button */}
@@ -182,29 +174,6 @@ export const Sidebar: React.FC = () => {
               <ChevronLeft className={`w-4 h-4 transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`} />
             </button>
           </div>
-
-          {/* User Profile */}
-          {!isCollapsed && (
-            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 animate-slideIn" style={{ animationDelay: '0.1s' }}>
-              <div className="flex items-center space-x-3">
-                <div className="relative">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
-                    {user?.name?.charAt(0).toUpperCase() || 'A'}
-                  </div>
-                  <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-gray-800 truncate">{user?.name || 'Alumni Member'}</h3>
-                  <p className="text-sm text-gray-500 truncate">Class of {user?.year || '--'}</p>
-                  <div className="mt-1">
-                    <span className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-700 text-xs font-medium rounded-full">
-                      Premium Member
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* Collapsed User Profile */}
           {isCollapsed && (
