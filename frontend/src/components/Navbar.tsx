@@ -465,8 +465,7 @@ export const Navbar: React.FC = () => {
         </div>
       )}
 
-      {/* Add styles for animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes slideInRight {
           from {
             transform: translateX(100%);
