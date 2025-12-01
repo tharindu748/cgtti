@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Users, 
@@ -10,10 +10,6 @@ import {
   Mail,
   Phone,
   MapPin,
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
   ChevronRight,
   LogIn,
   ArrowRight,
@@ -23,9 +19,12 @@ import {
   Briefcase,
   HeartHandshake,
   Sparkles,
+  TrendingUp,
+  Clock,
   Building,
   Globe,
-  TrendingUp
+  ChevronDown,
+  Target as TargetIcon
 } from 'lucide-react';
 
 export const Home: React.FC = () => {
@@ -33,23 +32,25 @@ export const Home: React.FC = () => {
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [currentSlide, setCurrentSlide] = useState(0);
   const [animatedStats, setAnimatedStats] = useState([0, 0, 0, 0]);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
-  // Temporary placeholder images
+  // Professional placeholder images
   const placeholderImages = {
     banner: "https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
-    campus: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    workshop: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    campus: "https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    workshop: "https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     graduation: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    alumni: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    sports: "https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-    event: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    alumni: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    sports: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    event: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   };
 
-  // Animation for stats counter
+  // Stats counter animation
   useEffect(() => {
     const finalStats = [10000, 56, 20, 11];
-    const duration = 2000; // 2 seconds
-    const steps = 60;
+    const duration = 2000;
+    const steps = 100;
     const increment = finalStats.map(stat => stat / steps);
     
     const timer = setInterval(() => {
@@ -64,41 +65,79 @@ export const Home: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
+  // Intersection Observer for scroll animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const stats = [
-    { label: 'Registered Alumni', value: `${Math.round(animatedStats[0]).toLocaleString()}+`, icon: Users, color: 'text-blue-600' },
-    { label: 'Years of Excellence', value: `${Math.round(animatedStats[1])}+`, icon: GraduationCap, color: 'text-purple-600' },
-    { label: 'Annual Events', value: `${Math.round(animatedStats[2])}+`, icon: Calendar, color: 'text-green-600' },
-    { label: 'Technical Trades', value: `${Math.round(animatedStats[3])}+`, icon: Briefcase, color: 'text-orange-600' },
+    { 
+      label: 'Registered Alumni', 
+      value: `${Math.round(animatedStats[0]).toLocaleString()}+`, 
+      icon: Users, 
+      color: 'from-blue-500 to-cyan-500',
+      delay: 0 
+    },
+    { 
+      label: 'Years of Excellence', 
+      value: `${Math.round(animatedStats[1])}+`, 
+      icon: GraduationCap, 
+      color: 'from-purple-500 to-pink-500',
+      delay: 100 
+    },
+    { 
+      label: 'Annual Events', 
+      value: `${Math.round(animatedStats[2])}+`, 
+      icon: Calendar, 
+      color: 'from-emerald-500 to-teal-500',
+      delay: 200 
+    },
+    { 
+      label: 'Technical Trades', 
+      value: `${Math.round(animatedStats[3])}+`, 
+      icon: Briefcase, 
+      color: 'from-amber-500 to-orange-500',
+      delay: 300 
+    },
   ];
 
   const notices = [
     {
       title: '56th Anniversary Celebration',
-      description: 'Join us for CGTTI\'s 56th anniversary celebrations on March 15th, 2024',
+      description: 'Join us for CGTTI\'s 56th anniversary celebrations',
       type: 'event',
-      date: 'Mar 15, 2024',
-      icon: '🎉'
+      date: 'Mar 15, 2024'
     },
     {
       title: 'Annual Membership Drive',
-      description: 'Renew your 2024 membership and enjoy exclusive benefits',
+      description: 'Renew your 2024 membership for exclusive benefits',
       type: 'announcement',
-      date: 'Dec 31, 2024',
-      icon: '📢'
+      date: 'Dec 31, 2024'
     },
     {
       title: 'Technical Skills Workshop',
       description: 'Free workshop for alumni on emerging technologies',
       type: 'opportunity',
-      date: 'Jan 25, 2024',
-      icon: '⚙️'
+      date: 'Jan 25, 2024'
     },
     {
       title: 'Student Scholarship Program',
       description: 'Applications open for alumni-sponsored scholarships',
       type: 'scholarship',
-      date: 'Feb 15, 2024',
-      icon: '🎓'
+      date: 'Feb 15, 2024'
     },
   ];
 
@@ -108,49 +147,60 @@ export const Home: React.FC = () => {
       date: 'March 20, 2024',
       time: '6:00 PM - 10:00 PM',
       location: 'CGTTI Main Auditorium, Katunayake',
-      description: 'Annual gathering of CGTTI alumni with special guests',
-      image: placeholderImages.event
+      description: 'Annual gathering of CGTTI alumni with special guests'
     },
     {
       title: 'Industry-Connect Workshop',
       date: 'April 15, 2024',
       time: '9:00 AM - 4:00 PM',
       location: 'CGTTI Training Center',
-      description: 'Connect with industry leaders and update technical skills',
-      image: placeholderImages.workshop
+      description: 'Connect with industry leaders and update technical skills'
     },
     {
       title: 'Sports & Cultural Day',
       date: 'May 10, 2024',
       time: '8:00 AM - 6:00 PM',
       location: 'CGTTI Sports Ground',
-      description: 'Annual sports meet and cultural show',
-      image: placeholderImages.sports
+      description: 'Annual sports meet and cultural show'
     },
     {
       title: 'Entrepreneurship Seminar',
       date: 'June 5, 2024',
       time: '2:00 PM - 5:00 PM',
       location: 'CGTTI Conference Hall',
-      description: 'Success stories from CGTTI alumni entrepreneurs',
-      image: placeholderImages.alumni
+      description: 'Success stories from CGTTI alumni entrepreneurs'
     },
   ];
 
-  const galleryImages = [
-    { id: 1, src: placeholderImages.graduation, alt: 'CGTTI Graduation Ceremony' },
-    { id: 2, src: placeholderImages.workshop, alt: 'Technical Workshop Session' },
-    { id: 3, src: placeholderImages.sports, alt: 'Annual Sports Meet' },
-    { id: 4, src: placeholderImages.alumni, alt: 'Alumni Networking Session' },
-    { id: 5, src: placeholderImages.campus, alt: 'CGTTI Campus View' },
-    { id: 6, src: placeholderImages.event, alt: 'Annual Alumni Meet' },
-  ];
-
   const quickLinks = [
-    { path: '/join', label: 'Join Alumni', icon: Users, color: 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800' },
-    { path: '/events', label: 'Upcoming Events', icon: Calendar, color: 'bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800' },
-    { path: '/gallery', label: 'Photo Gallery', icon: ImageIcon, color: 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800' },
-    { path: '/contact', label: 'Contact Office', icon: Mail, color: 'bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800' },
+    { 
+      path: '/join', 
+      label: 'Join Alumni', 
+      icon: Users, 
+      color: 'bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800',
+      delay: 0
+    },
+    { 
+      path: '/events', 
+      label: 'Upcoming Events', 
+      icon: Calendar, 
+      color: 'bg-gradient-to-br from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700',
+      delay: 100
+    },
+    { 
+      path: '/gallery', 
+      label: 'Photo Gallery', 
+      icon: ImageIcon, 
+      color: 'bg-gradient-to-br from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700',
+      delay: 200
+    },
+    { 
+      path: '/contact', 
+      label: 'Contact Office', 
+      icon: Mail, 
+      color: 'bg-gradient-to-br from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700',
+      delay: 300
+    },
   ];
 
   const handleLogin = (e: React.FormEvent) => {
@@ -176,344 +226,246 @@ export const Home: React.FC = () => {
   }, []);
 
   return (
-    <div className="overflow-hidden">
-      {/* Floating Animations */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-30 animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${10 + Math.random() * 10}s`
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Login Modal with Animation */}
-      {loginModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fadeIn">
-          <div className="bg-white rounded-2xl max-w-md w-full p-8 animate-slideUp">
-            <div className="flex justify-between items-center mb-6">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center animate-pulse">
-                  <LogIn className="w-5 h-5 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-800">CGTTI Alumni Login</h3>
-              </div>
-              <button
-                onClick={() => setLoginModalOpen(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                ✕
-              </button>
-            </div>
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div className="animate-slideIn" style={{ animationDelay: '0.1s' }}>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Email or Training Number
-                </label>
-                <input
-                  type="text"
-                  value={loginData.email}
-                  onChange={(e) => setLoginData({...loginData, email: e.target.value})}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="training-no@cgtti.lk"
-                  required
-                />
-              </div>
-              <div className="animate-slideIn" style={{ animationDelay: '0.2s' }}>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  value={loginData.password}
-                  onChange={(e) => setLoginData({...loginData, password: e.target.value})}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="••••••••"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] font-semibold shadow-lg hover:shadow-xl animate-slideIn"
-                style={{ animationDelay: '0.3s' }}
-              >
-                Login to Alumni Portal
-              </button>
-              <p className="text-center text-sm text-gray-600 animate-slideIn" style={{ animationDelay: '0.4s' }}>
-                New to alumni network?{' '}
-                <Link to="/join" className="text-blue-600 hover:text-blue-800 font-medium transition-colors">
-                  Register Here
-                </Link>
-              </p>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Hero Banner Section with Parallax */}
+    <div className="overflow-hidden" ref={sectionRef}>
+      {/* Elegant Hero Section */}
       <section 
-        className="relative h-[90vh] bg-cover bg-center bg-fixed overflow-hidden"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${placeholderImages.banner})`
+          background: 'linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1d4ed8 100%)'
         }}
       >
         {/* Animated Background Elements */}
         <div className="absolute inset-0">
-          {[...Array(10)].map((_, i) => (
+          {[...Array(15)].map((_, i) => (
             <div
               key={i}
-              className="absolute w-20 h-20 border-2 border-blue-400/20 rounded-full animate-pulse"
+              className="absolute rounded-full animate-float"
               style={{
+                width: `${20 + Math.random() * 40}px`,
+                height: `${20 + Math.random() * 40}px`,
+                background: `rgba(255, 255, 255, ${0.03 + Math.random() * 0.03})`,
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
-                animationDelay: `${i * 0.5}s`
+                animationDelay: `${i * 0.5}s`,
+                animationDuration: `${15 + Math.random() * 10}s`
               }}
             />
           ))}
         </div>
 
-        <div className="absolute inset-0 flex items-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-            {/* Animated Title */}
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-slideDown">
-              <span className="block">Ceylon German</span>
-              <span className="block text-blue-400 animate-glow">Technical Training Institute</span>
-            </h1>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          {/* Main Title with Staggered Animation */}
+          <div className="space-y-6 mb-12">
+            <div className="overflow-hidden">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight animate-slide-up">
+                <span className="block">Ceylon German</span>
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-300 mt-2">
+                  Technical Training Institute
+                </span>
+              </h1>
+            </div>
             
-            {/* Animated Subtitle */}
-            <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto opacity-0 animate-fadeInUp" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
-              <span className="inline-block animate-bounceSlow">✨</span> Connecting Generations of Skilled Professionals Since 1967 <span className="inline-block animate-bounceSlow" style={{ animationDelay: '0.5s' }}>✨</span>
-            </p>
-            
-            {/* Animated CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center opacity-0 animate-fadeInUp" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
-              <Link
-                to="/join"
-                className="group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105 hover:shadow-2xl flex items-center animate-pulse-once"
-              >
-                <span>Join Alumni Network</span>
-                <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform" size={20} />
-              </Link>
-              
-              <Link
-                to="/events"
-                className="group bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition-all transform hover:scale-105"
-              >
-                <span>View Events Calendar</span>
-                <Calendar className="ml-2 inline-block group-hover:rotate-12 transition-transform" size={20} />
-              </Link>
-              
-              <button
-                onClick={() => setLoginModalOpen(true)}
-                className="group bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-green-700 hover:to-emerald-700 transition-all transform hover:scale-105 hover:shadow-2xl flex items-center"
-              >
-                <LogIn className="mr-2 group-hover:rotate-12 transition-transform" size={20} />
-                <span>Alumni Login Portal</span>
-              </button>
+            <div className="overflow-hidden">
+              <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed animate-slide-up-delayed">
+                Pioneering technical excellence in Sri Lanka since 1967. 
+                Join our network of 10,000+ skilled professionals shaping industries nationwide.
+              </p>
             </div>
           </div>
-        </div>
-        
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ChevronDown size={32} className="text-white" />
+
+          {/* CTA Buttons with Smooth Hover Effects */}
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <Link
+              to="/join"
+              className="group relative px-10 py-4 bg-white text-blue-700 rounded-xl font-semibold text-lg overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+            >
+              <span className="relative z-10 flex items-center">
+                Join Alumni Network
+                <ArrowRight className="ml-3 group-hover:translate-x-2 transition-transform duration-300" size={20} />
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            </Link>
+            
+            <button
+              onClick={() => setLoginModalOpen(true)}
+              className="group relative px-10 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl font-semibold text-lg overflow-hidden transform transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+            >
+              <span className="relative z-10 flex items-center">
+                <LogIn className="mr-3 group-hover:rotate-12 transition-transform duration-300" size={20} />
+                Alumni Login
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            </button>
+          </div>
+
+          {/* Scroll Indicator */}
+          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce-slow">
+            <ChevronDown className="text-white/60" size={32} />
+          </div>
         </div>
       </section>
 
-      {/* Stats Section with Counter Animation */}
-      <section className="py-20 bg-gradient-to-b from-blue-900 to-blue-800 text-white relative overflow-hidden">
-        {/* Animated Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-grid-pattern animate-grid"></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 animate-slideUp">
-              <Sparkles className="inline-block mr-3 animate-spinSlow" size={32} />
-              CGTTI by Numbers
-              <Sparkles className="inline-block ml-3 animate-spinSlow" style={{ animationDelay: '0.5s' }} size={32} />
+      {/* Stats Section - Elegant Counter Animation */}
+      <section className="py-24 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center justify-center p-3 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl mb-6">
+              <TargetIcon className="w-8 h-8 text-blue-600" />
+            </div>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Excellence in Numbers
             </h2>
-            <p className="text-blue-200 text-lg max-w-2xl mx-auto animate-slideUp" style={{ animationDelay: '0.2s' }}>
-              Our impact in Sri Lanka's technical education landscape
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Our journey of technical education excellence quantified
             </p>
           </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div 
-                key={index} 
-                className="text-center group hover:scale-105 transition-transform duration-300 animate-slideUp"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                key={index}
+                className="text-center transform transition-all duration-700 hover:scale-105"
+                style={{
+                  animation: `fade-in-up 0.8s ease-out ${stat.delay}ms both`
+                }}
               >
-                <div className="relative inline-block mb-6">
-                  <div className="w-24 h-24 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-sm border-2 border-white/20 group-hover:border-blue-400 transition-all">
-                    <stat.icon className={`w-12 h-12 ${stat.color} group-hover:scale-110 transition-transform`} />
-                  </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center animate-ping opacity-75">
-                    <TrendingUp size={16} />
-                  </div>
+                <div className={`mb-6 p-6 rounded-2xl bg-gradient-to-br ${stat.color} bg-opacity-10 backdrop-blur-sm inline-block`}>
+                  <stat.icon className="w-12 h-12 text-gray-800" />
                 </div>
-                <div className="text-5xl font-bold mb-2 text-gradient bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text">
+                <div className={`text-5xl font-bold mb-3 bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
                   {stat.value}
                 </div>
-                <div className="text-blue-200 font-medium">{stat.label}</div>
+                <div className="text-gray-600 font-medium">{stat.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Notice Carousel with 3D Effect */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+      {/* Mission & Vision - Split Screen Animation */}
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center mb-12 animate-slideUp">
-            <div>
-              <h2 className="text-4xl font-bold text-gray-800 mb-2">
-                Latest Announcements
-              </h2>
-              <p className="text-gray-600">Stay updated with CGTTI news and events</p>
-            </div>
-            <div className="flex space-x-2 mt-4 md:mt-0">
-              <button
-                onClick={prevSlide}
-                className="p-3 rounded-full bg-white shadow-lg hover:shadow-xl hover:scale-110 transition-all"
-                aria-label="Previous notice"
-              >
-                <ChevronLeft size={24} className="text-blue-600" />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="p-3 rounded-full bg-white shadow-lg hover:shadow-xl hover:scale-110 transition-all"
-                aria-label="Next notice"
-              >
-                <RightIcon size={24} className="text-blue-600" />
-              </button>
-            </div>
-          </div>
-          
-          <div className="relative h-96">
-            {notices.map((notice, index) => {
-              const offset = (index - currentSlide + notices.length) % notices.length;
-              const isActive = offset === 0;
-              const isNext = offset === 1;
-              const isPrev = offset === notices.length - 1;
-              
-              return (
-                <div
-                  key={index}
-                  className={`absolute top-0 w-full md:w-3/4 lg:w-2/3 transition-all duration-500 ease-in-out ${
-                    isActive 
-                      ? 'left-1/2 transform -translate-x-1/2 z-30 scale-100 opacity-100' 
-                      : isNext
-                      ? 'left-3/4 transform translate-x-1/4 z-20 scale-90 opacity-70'
-                      : isPrev
-                      ? 'left-1/4 transform -translate-x-3/4 z-20 scale-90 opacity-70'
-                      : 'opacity-0 scale-50'
-                  }`}
-                >
-                  <div className={`bg-white rounded-2xl shadow-xl overflow-hidden border-2 ${
-                    isActive ? 'border-blue-500' : 'border-gray-200'
-                  }`}>
-                    <div className="p-8">
-                      <div className="flex items-center justify-between mb-6">
-                        <div className="flex items-center space-x-4">
-                          <span className="text-3xl">{notice.icon}</span>
-                          <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                            notice.type === 'event' ? 'bg-blue-100 text-blue-800' :
-                            notice.type === 'announcement' ? 'bg-green-100 text-green-800' :
-                            notice.type === 'opportunity' ? 'bg-purple-100 text-purple-800' :
-                            'bg-orange-100 text-orange-800'
-                          }`}>
-                            {notice.type.charAt(0).toUpperCase() + notice.type.slice(1)}
-                          </span>
-                        </div>
-                        <span className="text-gray-500 font-medium">{notice.date}</span>
-                      </div>
-                      <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                        {notice.title}
-                      </h3>
-                      <p className="text-gray-600 text-lg mb-6">{notice.description}</p>
-                      <Link 
-                        to="/notices" 
-                        className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold group"
-                      >
-                        Read Full Story
-                        <ChevronRight className="ml-2 group-hover:translate-x-2 transition-transform" size={20} />
-                      </Link>
-                    </div>
-                  </div>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Mission */}
+            <div 
+              className="space-y-6 transform transition-all duration-1000"
+              style={{
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'translateX(0)' : 'translateX(-50px)'
+              }}
+            >
+              <div className="inline-flex items-center space-x-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                  <Target className="w-6 h-6 text-white" />
                 </div>
-              );
-            })}
+                <h3 className="text-2xl font-bold text-gray-900">Our Mission</h3>
+              </div>
+              <p className="text-gray-600 text-lg leading-relaxed">
+                To cultivate a dynamic alumni community that fosters professional growth, 
+                supports institutional advancement, and contributes to Sri Lanka's 
+                industrial development through technical excellence and innovation.
+              </p>
+              <div className="pt-6 border-t border-gray-200">
+                <ul className="space-y-3">
+                  {['Industry Collaboration', 'Continuous Learning', 'Professional Development', 'Community Service'].map((item, idx) => (
+                    <li key={idx} className="flex items-center text-gray-700">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Vision */}
+            <div 
+              className="space-y-6 transform transition-all duration-1000"
+              style={{
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'translateX(0)' : 'translateX(50px)',
+                transitionDelay: '200ms'
+              }}
+            >
+              <div className="inline-flex items-center space-x-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                  <Eye className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900">Our Vision</h3>
+              </div>
+              <p className="text-gray-600 text-lg leading-relaxed">
+                To be the premier alumni network in Sri Lanka's technical education sector, 
+                recognized for our transformative impact on industry development, 
+                skilled workforce enhancement, and national economic growth.
+              </p>
+              <div className="bg-gradient-to-br from-gray-50 to-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                <div className="flex items-center space-x-3 mb-4">
+                  <Globe className="w-6 h-6 text-blue-600" />
+                  <h4 className="font-semibold text-gray-900">Global Reach</h4>
+                </div>
+                <p className="text-gray-600">
+                  Our alumni network spans across 12+ countries, creating global opportunities 
+                  for collaboration and knowledge exchange.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Events Section with Hover Effects */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+      {/* Events Section - Card Stack Animation */}
+      <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 animate-slideUp">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              Upcoming Events & Workshops
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Upcoming Professional Events
             </h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Join fellow alumni for technical workshops, networking sessions, and alumni gatherings
+              Industry-relevant workshops, networking sessions, and technical seminars
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {events.map((event, index) => (
-              <div 
+              <div
                 key={index}
-                className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 animate-slideUp"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-blue-300 transition-all duration-500 hover:shadow-2xl transform hover:-translate-y-2"
+                style={{
+                  animation: `card-enter 0.8s ease-out ${index * 150}ms both`
+                }}
               >
-                {/* Event Image with Overlay */}
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={event.image}
-                    alt={event.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute top-4 right-4">
-                    <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-sm font-semibold text-blue-600">
-                      {event.date}
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-2">
+                      <Calendar className="w-5 h-5 text-blue-600" />
+                      <span className="font-medium text-gray-700">{event.date}</span>
+                    </div>
+                    <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium">
+                      Featured
                     </span>
                   </div>
-                </div>
-                
-                {/* Event Content */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors">
+                  
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
                     {event.title}
                   </h3>
-                  <div className="space-y-2 text-gray-600 mb-4">
-                    <div className="flex items-center">
-                      <ClockIcon size={16} className="mr-2 text-blue-500" />
+                  
+                  <div className="space-y-3 mb-6">
+                    <div className="flex items-center text-gray-600">
+                      <Clock className="w-4 h-4 mr-2" />
                       {event.time}
                     </div>
-                    <div className="flex items-center">
-                      <MapPin size={16} className="mr-2 text-blue-500" />
+                    <div className="flex items-center text-gray-600">
+                      <MapPin className="w-4 h-4 mr-2" />
                       <span className="text-sm">{event.location}</span>
                     </div>
                   </div>
-                  <p className="text-gray-500 text-sm mb-6">{event.description}</p>
-                  <div className="flex space-x-3">
-                    <button className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2.5 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105 text-sm font-semibold shadow-md hover:shadow-lg">
-                      Register Now
-                    </button>
-                    <button className="px-4 py-2.5 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-sm font-semibold">
-                      Details
-                    </button>
-                  </div>
+                  
+                  <p className="text-gray-500 mb-6 text-sm leading-relaxed">
+                    {event.description}
+                  </p>
+                  
+                  <button className="w-full py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-medium hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]">
+                    Register Now
+                  </button>
                 </div>
               </div>
             ))}
@@ -521,119 +473,126 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Gallery Section with Masonry Layout */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+      {/* Quick Links - Floating Animation */}
+      <section className="py-24 bg-gradient-to-br from-blue-900 to-blue-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 animate-slideUp">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              CGTTI Gallery
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Moments from campus life, technical workshops, and alumni gatherings
-            </p>
-          </div>
-          
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-            {galleryImages.map((image, index) => (
-              <div 
-                key={image.id}
-                className="break-inside-avoid relative group cursor-pointer animate-fadeIn"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="relative overflow-hidden rounded-xl shadow-lg group-hover:shadow-2xl transition-shadow duration-500">
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-700"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                    <div className="text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                      <p className="font-semibold">{image.alt}</p>
-                      <p className="text-sm opacity-90">Click to view full size</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Links with Gradient Animations */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 via-blue-700 to-purple-700 relative overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-shimmer"></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
+            <div className="inline-flex items-center justify-center p-3 bg-white/10 rounded-2xl backdrop-blur-sm mb-6">
+              <Sparkles className="w-8 h-8 text-white" />
+            </div>
             <h2 className="text-4xl font-bold text-white mb-4">
-              Quick Access Portal
+              Alumni Resources Portal
             </h2>
-            <p className="text-blue-100 text-lg">
-              Everything you need as a CGTTI alumnus in one place
+            <p className="text-blue-200 text-lg max-w-2xl mx-auto">
+              Everything you need to stay connected and advance your career
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {quickLinks.map((link, index) => (
               <Link
                 key={index}
                 to={link.path}
-                className={`${link.color} text-white p-8 rounded-2xl text-center transform hover:scale-105 transition-all duration-500 hover:shadow-2xl group animate-slideUp`}
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={`${link.color} text-white p-8 rounded-2xl transform transition-all duration-700 hover:scale-105 hover:shadow-2xl backdrop-blur-sm border border-white/10`}
+                style={{
+                  animation: `float-in 0.8s ease-out ${link.delay}ms both`
+                }}
               >
-                <div className="flex flex-col items-center">
-                  <div className="mb-6 p-4 bg-white/20 rounded-full group-hover:rotate-12 transition-transform duration-500">
-                    <link.icon size={40} className="text-white" />
+                <div className="flex flex-col items-center text-center">
+                  <div className="mb-6 p-4 bg-white/20 rounded-full backdrop-blur-sm">
+                    <link.icon className="w-10 h-10" />
                   </div>
-                  <span className="font-bold text-xl mb-2">{link.label}</span>
-                  <div className="w-0 group-hover:w-12 h-0.5 bg-white/50 transition-all duration-500"></div>
+                  <h3 className="text-xl font-bold mb-2">{link.label}</h3>
+                  <div className="w-8 h-1 bg-white/30 rounded-full mt-2"></div>
                 </div>
               </Link>
             ))}
           </div>
-          
-          {/* Additional Features */}
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { icon: '👥', title: 'Find Batchmates', desc: 'Connect with your CGTTI colleagues' },
-              { icon: '💼', title: 'Job Portal', desc: 'Career opportunities for graduates' },
-              { icon: '🎯', title: 'Mentorship Program', desc: 'Guide current CGTTI students' },
-            ].map((feature, index) => (
-              <div 
-                key={index}
-                className="bg-white/10 backdrop-blur-sm p-6 rounded-xl hover:bg-white/20 transition-all duration-500 group hover:scale-105 cursor-pointer animate-slideUp"
-                style={{ animationDelay: `${0.5 + index * 0.1}s` }}
-              >
-                <div className="flex items-center space-x-4">
-                  <span className="text-3xl group-hover:animate-bounce">{feature.icon}</span>
-                  <div>
-                    <h4 className="text-white font-semibold text-lg">{feature.title}</h4>
-                    <p className="text-blue-100 text-sm mt-1">{feature.desc}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
+
+      {/* Login Modal - Professional Design */}
+      {loginModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl max-w-md w-full overflow-hidden animate-modal-enter">
+            <div className="p-8">
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center space-x-3">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-xl flex items-center justify-center">
+                    <LogIn className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900">Alumni Portal</h3>
+                    <p className="text-gray-500 text-sm">CGTTI Alumni Network</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setLoginModalOpen(false)}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <span className="text-2xl text-gray-400 hover:text-gray-600">×</span>
+                </button>
+              </div>
+
+              <form onSubmit={handleLogin} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    value={loginData.email}
+                    onChange={(e) => setLoginData({...loginData, email: e.target.value})}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
+                    placeholder="alumni@cgtti.lk"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    value={loginData.password}
+                    onChange={(e) => setLoginData({...loginData, password: e.target.value})}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
+                    placeholder="••••••••"
+                    required
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <label className="flex items-center">
+                    <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+                    <span className="ml-2 text-sm text-gray-600">Remember me</span>
+                  </label>
+                  <button type="button" className="text-sm text-blue-600 hover:text-blue-800">
+                    Forgot password?
+                  </button>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] shadow-lg hover:shadow-xl"
+                >
+                  Access Alumni Dashboard
+                </button>
+              </form>
+
+              <div className="mt-8 pt-6 border-t border-gray-200">
+                <p className="text-center text-gray-600">
+                  New to the network?{' '}
+                  <Link to="/join" className="text-blue-600 font-semibold hover:text-blue-800">
+                    Create Account
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
-
-// Custom Icons
-const ChevronDown = ({ size, className }: { size: number; className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M6 9l6 6 6-6"/>
-  </svg>
-);
-
-const ClockIcon = ({ size, className }: { size: number; className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <circle cx="12" cy="12" r="10"></circle>
-    <polyline points="12 6 12 12 16 14"></polyline>
-  </svg>
-);
