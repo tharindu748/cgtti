@@ -1,9 +1,11 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from '@context/AuthContext';
-import { Login } from '@pages/Login';
-import { Dashboard } from '@pages/Dashboard';
-import { Members } from '@pages/Members';
+import { useAuth } from '../context/AuthContext';
+import { Login } from '../pages/Login';
+import { Dashboard } from '../pages/Dashboard';
+import { Members } from '../pages/Members';
+import { Home } from '../pages/Home';
+
 
 // Temporary placeholder components
 const Register = () => <div>Register Page - Coming Soon</div>;
@@ -23,6 +25,8 @@ const AppRoutes: React.FC = () => {
 
   return (
     <Routes>
+       <Route path="/" element={<Home />} />
+
       <Route 
         path="/login" 
         element={!user ? <Login /> : <Navigate to="/dashboard" />} 
