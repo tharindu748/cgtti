@@ -93,6 +93,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     return (
       <div className="min-h-screen bg-gray-50">
         <div className="flex">
+          <Navbar />
           <Sidebar />
           <main className="flex-1 p-6">
             {children}
