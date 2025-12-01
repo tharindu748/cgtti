@@ -69,7 +69,7 @@ export const Navbar: React.FC = () => {
             : 'bg-white py-3 shadow-md'
         }`}
       >
-        <div className="bg-gray-900 max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-gray-900max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             {/* Logo with Professional Design */}
             <Link 
