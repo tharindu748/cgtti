@@ -231,10 +231,9 @@ export const Home: React.FC = () => {
                 Welcome to CGTTI Alumni Network
               </h2>
               <p className="text-lg text-gray-600 mb-6">
-                We are a vibrant community of graduates dedicated to fostering lifelong connections, 
-                supporting professional growth, and contributing to the success of current students. 
-                Our network spans generations and industries, creating opportunities for collaboration, 
-                mentorship, and shared success.
+We are a vibrant community of graduates dedicated to fostering lifelong connections, supporting professional growth, and contributing to the success of current students. Our network spans generations and industries, creating opportunities for collaboration, mentorship, and shared success.
+
+Whether you graduated last year or decades ago, there’s a place for you in our growing community of over 10000 alumni worldwide.
               </p>
               <p className="text-lg text-gray-600">
                 Whether you graduated last year or decades ago, there's a place for you in our growing 
