@@ -362,16 +362,6 @@ export const Login: React.FC = () => {
                 </div>
               </form>
 
-              {/* Divider */}
-              <div className="relative my-8">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-200"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white text-gray-500">Or continue with</span>
-                </div>
-              </div>
-
               {/* Registration Link */}
               <div className="text-center pt-6 border-t border-gray-100 animate-slideIn" style={{ animationDelay: '0.5s' }}>
                 <p className="text-gray-600">
