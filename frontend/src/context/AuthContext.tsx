@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { authAPI } from '@api/auth';
 
 interface User {
+  name: any;
   id: string;
   email: string;
   role: 'ADMIN' | 'MEMBER';
