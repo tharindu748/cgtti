@@ -69,7 +69,7 @@ export const Navbar: React.FC = () => {
             : 'bg-white py-3 shadow-md'
         }`}
       >
-        <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-gray-900 max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             {/* Logo with Professional Design */}
             <Link 
@@ -158,7 +158,7 @@ export const Navbar: React.FC = () => {
                 </div>
               </div>
 
-              {/* Join Button */}
+              {/* Join Button
               <Link
                 to="/join"
                 className="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-500 transform hover:scale-105 shadow-md"
@@ -168,7 +168,7 @@ export const Navbar: React.FC = () => {
                   Join Network
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-blue-800 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-              </Link>
+              </Link> */}
 
               {/* User Menu */}
               {user ? (
