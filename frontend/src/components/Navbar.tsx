@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, Dashboard, LogIn } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useAuth(); // Get user from auth context
 
   const navItems = [
     { path: '/', label: 'Home' },
@@ -14,6 +17,17 @@ export const Navbar: React.FC = () => {
     { path: '/membership', label: 'Membership' },
     { path: '/contact', label: 'Contact' },
   ];
+
+  const handleAuthClick = () => {
+    if (user) {
+      // If admin is logged in, go to dashboard
+      navigate('/dashboard');
+    } else {
+      // If not logged in, go to login page
+      navigate('/login');
+    }
+    setIsOpen(false);
+  };
 
   return (
     <nav className="bg-white shadow-lg sticky top-0 z-50">
@@ -32,7 +46,7 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-4">
             {navItems.map((item) => (
               <Link
                 key={item.path}
@@ -46,18 +60,37 @@ export const Navbar: React.FC = () => {
                 {item.label}
               </Link>
             ))}
+            
             <Link
               to="/join"
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
             >
               Join Now
             </Link>
-            <Link
-              to="/login"
-              className="text-gray-600 hover:text-blue-600 px-3 py-2 text-sm font-medium"
+            
+            {/* Conditional Button: Dashboard for logged-in admin, Login for others */}
+            <button
+              onClick={handleAuthClick}
+              className={`
+                flex items-center space-x-2 px-5 py-2 rounded-lg font-medium transition-colors
+                ${user 
+                  ? 'bg-purple-600 hover:bg-purple-700 text-white shadow-md' 
+                  : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                }
+              `}
             >
-              Member Login
-            </Link>
+              {user ? (
+                <>
+                  <Dashboard size={18} />
+                  <span>Dashboard</span>
+                </>
+              ) : (
+                <>
+                  <LogIn size={18} />
+                  <span>Member Login</span>
+                </>
+              )}
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -89,6 +122,7 @@ export const Navbar: React.FC = () => {
                   {item.label}
                 </Link>
               ))}
+              
               <Link
                 to="/join"
                 className="block bg-blue-600 text-white px-3 py-2 rounded-md text-base font-medium hover:bg-blue-700"
@@ -96,13 +130,21 @@ export const Navbar: React.FC = () => {
               >
                 Join Now
               </Link>
-              <Link
-                to="/login"
-                className="block text-gray-700 hover:bg-gray-50 px-3 py-2 rounded-md text-base font-medium"
-                onClick={() => setIsOpen(false)}
+              
+              {/* Conditional Mobile Button */}
+              <button
+                onClick={handleAuthClick}
+                className={`w-full text-left block px-3 py-2 rounded-md text-base font-medium ${
+                  user 
+                    ? 'bg-purple-600 text-white hover:bg-purple-700' 
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
               >
-                Member Login
-              </Link>
+                <div className="flex items-center">
+                  {user ? <Dashboard size={20} className="mr-2" /> : <LogIn size={20} className="mr-2" />}
+                  {user ? 'Dashboard' : 'Member Login'}
+                </div>
+              </button>
             </div>
           </div>
         )}
