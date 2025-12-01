@@ -370,6 +370,84 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* Alumni Introduction Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-4xl font-bold text-gray-800 mb-6 animate-slideUp">
+                Welcome to CGTTI Alumni Network
+              </h2>
+              <p className="text-lg text-gray-600 mb-6 animate-slideUp" style={{ animationDelay: '0.1s' }}>
+                We are a vibrant community of graduates dedicated to fostering lifelong connections, 
+                supporting professional growth, and contributing to the success of current students. 
+                Our network spans generations and industries, creating opportunities for collaboration, 
+                mentorship, and shared success.
+              </p>
+              <p className="text-lg text-gray-600 animate-slideUp" style={{ animationDelay: '0.2s' }}>
+                Whether you graduated last year or decades ago, there's a place for you in our growing 
+                community of over 10,000 alumni worldwide.
+              </p>
+            </div>
+            <div className="relative animate-slideUp" style={{ animationDelay: '0.3s' }}>
+              <div className="aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden shadow-2xl">
+                <img
+                  src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                  alt="CGTTI Alumni Community"
+                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+                />
+              </div>
+              <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center transform rotate-12 shadow-xl">
+                <Users className="w-12 h-12 text-white" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mission & Vision Section */}
+      <section className="py-16 bg-gradient-to-r from-blue-50 to-purple-50 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0 bg-grid-pattern"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-800 mb-4 animate-slideUp">
+              Our Guiding Principles
+            </h2>
+            <p className="text-gray-600 max-w-3xl mx-auto animate-slideUp" style={{ animationDelay: '0.1s' }}>
+              Driving excellence and building bridges across generations
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-500 transform hover:-translate-y-1 animate-slideUp" style={{ animationDelay: '0.2s' }}>
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform">
+                <Target className="w-8 h-8 text-blue-600" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Mission</h3>
+              <p className="text-gray-600">
+                To connect, engage, and support CGTTI alumni worldwide through meaningful interactions, 
+                professional development opportunities, and philanthropic initiatives that strengthen 
+                our community and support our alma mater.
+              </p>
+            </div>
+            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-500 transform hover:-translate-y-1 animate-slideUp" style={{ animationDelay: '0.3s' }}>
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform">
+                <Eye className="w-8 h-8 text-purple-600" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Vision</h3>
+              <p className="text-gray-600">
+                To be the most dynamic and supportive alumni network, recognized for our contributions 
+                to individual success, institutional excellence, and societal development through 
+                innovation, collaboration, and lifelong learning.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Notice Carousel with 3D Effect */}
       <section className="py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
