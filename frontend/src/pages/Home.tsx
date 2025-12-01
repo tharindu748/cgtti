@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Users, 
@@ -21,117 +21,140 @@ import {
   ChevronRight as RightIcon,
   GraduationCap,
   Briefcase,
-  HeartHandshake
+  HeartHandshake,
+  Sparkles,
+  Building,
+  Globe,
+  TrendingUp
 } from 'lucide-react';
 
 export const Home: React.FC = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [animatedStats, setAnimatedStats] = useState([0, 0, 0, 0]);
 
-  // CGTTI-Specific Stats
+  // Temporary placeholder images
+  const placeholderImages = {
+    banner: "https://images.unsplash.com/photo-1562774053-701939374585?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+    campus: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    workshop: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    graduation: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    alumni: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    sports: "https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    event: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+  };
+
+  // Animation for stats counter
+  useEffect(() => {
+    const finalStats = [10000, 56, 20, 11];
+    const duration = 2000; // 2 seconds
+    const steps = 60;
+    const increment = finalStats.map(stat => stat / steps);
+    
+    const timer = setInterval(() => {
+      setAnimatedStats(prev => prev.map((current, index) => {
+        if (current < finalStats[index]) {
+          return Math.min(current + increment[index], finalStats[index]);
+        }
+        return current;
+      }));
+    }, duration / steps);
+
+    return () => clearInterval(timer);
+  }, []);
+
   const stats = [
-    { label: 'Registered Alumni', value: '10,000+', icon: Users, color: 'text-blue-600' },
-    { label: 'Annual Events', value: '20+', icon: Calendar, color: 'text-green-600' },
-    { label: 'Since 1967', value: '56+ Years', icon: GraduationCap, color: 'text-purple-600' },
-    { label: 'Industry Trades', value: '11+ Trades', icon: Briefcase, color: 'text-orange-600' },
+    { label: 'Registered Alumni', value: `${Math.round(animatedStats[0]).toLocaleString()}+`, icon: Users, color: 'text-blue-600' },
+    { label: 'Years of Excellence', value: `${Math.round(animatedStats[1])}+`, icon: GraduationCap, color: 'text-purple-600' },
+    { label: 'Annual Events', value: `${Math.round(animatedStats[2])}+`, icon: Calendar, color: 'text-green-600' },
+    { label: 'Technical Trades', value: `${Math.round(animatedStats[3])}+`, icon: Briefcase, color: 'text-orange-600' },
   ];
 
-  // CGTTI-Specific Notices
   const notices = [
     {
       title: '56th Anniversary Celebration',
       description: 'Join us for CGTTI\'s 56th anniversary celebrations on March 15th, 2024',
       type: 'event',
-      date: 'Mar 15, 2024'
+      date: 'Mar 15, 2024',
+      icon: '🎉'
     },
     {
       title: 'Annual Membership Drive',
       description: 'Renew your 2024 membership and enjoy exclusive benefits',
       type: 'announcement',
-      date: 'Dec 31, 2024'
+      date: 'Dec 31, 2024',
+      icon: '📢'
     },
     {
       title: 'Technical Skills Workshop',
       description: 'Free workshop for alumni on emerging technologies',
       type: 'opportunity',
-      date: 'Jan 25, 2024'
+      date: 'Jan 25, 2024',
+      icon: '⚙️'
     },
     {
       title: 'Student Scholarship Program',
       description: 'Applications open for alumni-sponsored scholarships',
       type: 'scholarship',
-      date: 'Feb 15, 2024'
+      date: 'Feb 15, 2024',
+      icon: '🎓'
     },
   ];
 
-  // CGTTI-Specific Events
   const events = [
     {
       title: 'Annual Alumni Meet 2024',
       date: 'March 20, 2024',
       time: '6:00 PM - 10:00 PM',
       location: 'CGTTI Main Auditorium, Katunayake',
-      description: 'Annual gathering of CGTTI alumni with special guests'
+      description: 'Annual gathering of CGTTI alumni with special guests',
+      image: placeholderImages.event
     },
     {
       title: 'Industry-Connect Workshop',
       date: 'April 15, 2024',
       time: '9:00 AM - 4:00 PM',
       location: 'CGTTI Training Center',
-      description: 'Connect with industry leaders and update technical skills'
+      description: 'Connect with industry leaders and update technical skills',
+      image: placeholderImages.workshop
     },
     {
       title: 'Sports & Cultural Day',
       date: 'May 10, 2024',
       time: '8:00 AM - 6:00 PM',
       location: 'CGTTI Sports Ground',
-      description: 'Annual sports meet and cultural show'
+      description: 'Annual sports meet and cultural show',
+      image: placeholderImages.sports
     },
     {
       title: 'Entrepreneurship Seminar',
       date: 'June 5, 2024',
       time: '2:00 PM - 5:00 PM',
       location: 'CGTTI Conference Hall',
-      description: 'Success stories from CGTTI alumni entrepreneurs'
+      description: 'Success stories from CGTTI alumni entrepreneurs',
+      image: placeholderImages.alumni
     },
   ];
 
-  // CGTTI-Specific Gallery Images
   const galleryImages = [
-    { id: 1, src: '/images/cgtti-campus.jpg', alt: 'CGTTI Main Campus Katunayake' },
-    { id: 2, src: '/images/graduation.jpg', alt: 'CGTTI Graduation Ceremony' },
-    { id: 3, src: '/images/workshop.jpg', alt: 'Technical Workshop Session' },
-    { id: 4, src: '/images/sports.jpg', alt: 'Annual Sports Meet' },
-    { id: 5, src: '/images/alumni-meet.jpg', alt: 'Alumni Networking Session' },
-    { id: 6, src: '/images/award.jpg', alt: 'Award Ceremony' },
-  ];
-
-  // CGTTI Trades
-  const cgttiTrades = [
-    'Tool & Die Making',
-    'Millwright',
-    'Auto Mobile',
-    'Boilermaker & Blacksmith',
-    'Auto Electrical',
-    'Refrigeration & AC',
-    'Mechatronics',
-    'Diesel Pump Fitting',
-    'Welding',
-    'Power Electrical',
-    'Computer Hardware'
+    { id: 1, src: placeholderImages.graduation, alt: 'CGTTI Graduation Ceremony' },
+    { id: 2, src: placeholderImages.workshop, alt: 'Technical Workshop Session' },
+    { id: 3, src: placeholderImages.sports, alt: 'Annual Sports Meet' },
+    { id: 4, src: placeholderImages.alumni, alt: 'Alumni Networking Session' },
+    { id: 5, src: placeholderImages.campus, alt: 'CGTTI Campus View' },
+    { id: 6, src: placeholderImages.event, alt: 'Annual Alumni Meet' },
   ];
 
   const quickLinks = [
-    { path: '/join', label: 'Join Alumni', icon: Users, color: 'bg-blue-600 hover:bg-blue-700' },
-    { path: '/events', label: 'Upcoming Events', icon: Calendar, color: 'bg-green-600 hover:bg-green-700' },
-    { path: '/gallery', label: 'Photo Gallery', icon: ImageIcon, color: 'bg-purple-600 hover:bg-purple-700' },
-    { path: '/contact', label: 'Contact Office', icon: Mail, color: 'bg-orange-600 hover:bg-orange-700' },
+    { path: '/join', label: 'Join Alumni', icon: Users, color: 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800' },
+    { path: '/events', label: 'Upcoming Events', icon: Calendar, color: 'bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800' },
+    { path: '/gallery', label: 'Photo Gallery', icon: ImageIcon, color: 'bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800' },
+    { path: '/contact', label: 'Contact Office', icon: Mail, color: 'bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800' },
   ];
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login attempt:', loginData);
     setLoginModalOpen(false);
     setLoginData({ email: '', password: '' });
   };
@@ -144,23 +167,52 @@ export const Home: React.FC = () => {
     setCurrentSlide((prev) => (prev === 0 ? notices.length - 1 : prev - 1));
   };
 
+  // Auto slide for notices
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div>
-      {/* Login Modal */}
+    <div className="overflow-hidden">
+      {/* Floating Animations */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-30 animate-float"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 5}s`,
+              animationDuration: `${10 + Math.random() * 10}s`
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Login Modal with Animation */}
       {loginModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-8">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 animate-fadeIn">
+          <div className="bg-white rounded-2xl max-w-md w-full p-8 animate-slideUp">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-gray-800">CGTTI Alumni Login</h3>
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center animate-pulse">
+                  <LogIn className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-800">CGTTI Alumni Login</h3>
+              </div>
               <button
                 onClick={() => setLoginModalOpen(false)}
-                className="text-gray-400 hover:text-gray-600"
+                className="text-gray-400 hover:text-gray-600 transition-colors"
               >
                 ✕
               </button>
             </div>
             <form onSubmit={handleLogin} className="space-y-4">
-              <div>
+              <div className="animate-slideIn" style={{ animationDelay: '0.1s' }}>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Email or Training Number
                 </label>
@@ -168,12 +220,12 @@ export const Home: React.FC = () => {
                   type="text"
                   value={loginData.email}
                   onChange={(e) => setLoginData({...loginData, email: e.target.value})}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   placeholder="training-no@cgtti.lk"
                   required
                 />
               </div>
-              <div>
+              <div className="animate-slideIn" style={{ animationDelay: '0.2s' }}>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Password
                 </label>
@@ -181,20 +233,21 @@ export const Home: React.FC = () => {
                   type="password"
                   value={loginData.password}
                   onChange={(e) => setLoginData({...loginData, password: e.target.value})}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   placeholder="••••••••"
                   required
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] font-semibold shadow-lg hover:shadow-xl animate-slideIn"
+                style={{ animationDelay: '0.3s' }}
               >
                 Login to Alumni Portal
               </button>
-              <p className="text-center text-sm text-gray-600">
+              <p className="text-center text-sm text-gray-600 animate-slideIn" style={{ animationDelay: '0.4s' }}>
                 New to alumni network?{' '}
-                <Link to="/join" className="text-blue-600 hover:underline">
+                <Link to="/join" className="text-blue-600 hover:text-blue-800 font-medium transition-colors">
                   Register Here
                 </Link>
               </p>
@@ -203,273 +256,261 @@ export const Home: React.FC = () => {
         </div>
       )}
 
-      {/* Hero Banner Section */}
+      {/* Hero Banner Section with Parallax */}
       <section 
-        className="relative h-[80vh] bg-cover bg-center"
+        className="relative h-[90vh] bg-cover bg-center bg-fixed overflow-hidden"
         style={{
-          backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(/images/cgtti-banner.jpg)'
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${placeholderImages.banner})`
         }}
       >
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0">
+          {[...Array(10)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-20 h-20 border-2 border-blue-400/20 rounded-full animate-pulse"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${i * 0.5}s`
+              }}
+            />
+          ))}
+        </div>
+
         <div className="absolute inset-0 flex items-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-              Ceylon German Technical Training Institute
+            {/* Animated Title */}
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-slideDown">
+              <span className="block">Ceylon German</span>
+              <span className="block text-blue-400 animate-glow">Technical Training Institute</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
-              Connecting Generations of Skilled Professionals Since 1967
+            
+            {/* Animated Subtitle */}
+            <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto opacity-0 animate-fadeInUp" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
+              <span className="inline-block animate-bounceSlow">✨</span> Connecting Generations of Skilled Professionals Since 1967 <span className="inline-block animate-bounceSlow" style={{ animationDelay: '0.5s' }}>✨</span>
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            
+            {/* Animated CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center opacity-0 animate-fadeInUp" style={{ animationDelay: '0.6s', animationFillMode: 'forwards' }}>
               <Link
                 to="/join"
-                className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-all transform hover:scale-105 flex items-center"
+                className="group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105 hover:shadow-2xl flex items-center animate-pulse-once"
               >
-                Join Alumni Network <ArrowRight className="ml-2" size={20} />
+                <span>Join Alumni Network</span>
+                <ArrowRight className="ml-2 group-hover:translate-x-2 transition-transform" size={20} />
               </Link>
+              
               <Link
                 to="/events"
-                className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition-all"
+                className="group bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition-all transform hover:scale-105"
               >
-                View Events
+                <span>View Events Calendar</span>
+                <Calendar className="ml-2 inline-block group-hover:rotate-12 transition-transform" size={20} />
               </Link>
+              
               <button
                 onClick={() => setLoginModalOpen(true)}
-                className="bg-green-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-green-700 transition-all flex items-center"
+                className="group bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-green-700 hover:to-emerald-700 transition-all transform hover:scale-105 hover:shadow-2xl flex items-center"
               >
-                <LogIn className="mr-2" size={20} />
-                Alumni Login
+                <LogIn className="mr-2 group-hover:rotate-12 transition-transform" size={20} />
+                <span>Alumni Login Portal</span>
               </button>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* CGTTI Introduction Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl font-bold text-gray-800 mb-6">
-                Welcome to CGTTI Alumni Association
-              </h2>
-              <p className="text-lg text-gray-600 mb-4">
-                Established in 1967 under German-Sri Lankan bilateral cooperation, CGTTI has been at the forefront of technical education in Sri Lanka for over five decades. Our alumni network spans across industries, contributing significantly to Sri Lanka's industrial development.
-              </p>
-              <p className="text-lg text-gray-600 mb-6">
-                With more than 10,000 skilled professionals graduated from our 11 technical trades, our alumni are leading in manufacturing, automotive, electrical, refrigeration, and various engineering sectors both locally and internationally.
-              </p>
-              
-              {/* CGTTI Trades List */}
-              <div className="mb-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-3">Our Technical Trades:</h3>
-                <div className="grid grid-cols-2 gap-2">
-                  {cgttiTrades.map((trade, index) => (
-                    <div key={index} className="flex items-center text-gray-600">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
-                      {trade}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div className="relative">
-              <div className="aspect-w-16 aspect-h-9 rounded-2xl overflow-hidden shadow-2xl">
-                <img
-                  src="/images/cgtti-building.jpg"
-                  alt="CGTTI Main Building Katunayake"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="absolute -bottom-4 -right-4 bg-blue-600 text-white p-4 rounded-lg shadow-lg">
-                <div className="text-center">
-                  <div className="text-2xl font-bold">56+</div>
-                  <div className="text-sm">Years of Excellence</div>
-                </div>
-              </div>
-            </div>
-          </div>
+        
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <ChevronDown size={32} className="text-white" />
         </div>
       </section>
 
-      {/* Mission & Vision Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-50 to-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Our Commitment</h2>
-            <p className="text-gray-600 max-w-3xl mx-auto">
-              Building a stronger technical community through alumni engagement
+      {/* Stats Section with Counter Animation */}
+      <section className="py-20 bg-gradient-to-b from-blue-900 to-blue-800 text-white relative overflow-hidden">
+        {/* Animated Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-grid-pattern animate-grid"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 animate-slideUp">
+              <Sparkles className="inline-block mr-3 animate-spinSlow" size={32} />
+              CGTTI by Numbers
+              <Sparkles className="inline-block ml-3 animate-spinSlow" style={{ animationDelay: '0.5s' }} size={32} />
+            </h2>
+            <p className="text-blue-200 text-lg max-w-2xl mx-auto animate-slideUp" style={{ animationDelay: '0.2s' }}>
+              Our impact in Sri Lanka's technical education landscape
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
-                <Target className="w-8 h-8 text-blue-600" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Mission</h3>
-              <p className="text-gray-600">
-                To strengthen the bond between CGTTI and its alumni, foster lifelong learning, and support the professional growth of our technical graduates while contributing to national development.
-              </p>
-            </div>
-            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                <Eye className="w-8 h-8 text-green-600" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Vision</h3>
-              <p className="text-gray-600">
-                To be the most dynamic alumni network in Sri Lanka's technical education sector, recognized for our contributions to industry development and skilled workforce enhancement.
-              </p>
-            </div>
-            <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-6">
-                <HeartHandshake className="w-8 h-8 text-orange-600" />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Values</h3>
-              <p className="text-gray-600">
-                Technical Excellence • Professional Integrity • Industry Collaboration • Continuous Learning • Community Service • Sri Lankan Pride
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 bg-blue-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-2">CGTTI by Numbers</h2>
-            <p className="text-blue-200">Our impact in Sri Lanka's technical sector</p>
-          </div>
+          
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="flex justify-center mb-4">
-                  <div className={`w-16 h-16 rounded-full flex items-center justify-center ${stat.color.replace('text', 'bg')} bg-opacity-20`}>
-                    <stat.icon className={`w-8 h-8 ${stat.color}`} />
+              <div 
+                key={index} 
+                className="text-center group hover:scale-105 transition-transform duration-300 animate-slideUp"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="relative inline-block mb-6">
+                  <div className="w-24 h-24 rounded-full flex items-center justify-center bg-white/10 backdrop-blur-sm border-2 border-white/20 group-hover:border-blue-400 transition-all">
+                    <stat.icon className={`w-12 h-12 ${stat.color} group-hover:scale-110 transition-transform`} />
+                  </div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center animate-ping opacity-75">
+                    <TrendingUp size={16} />
                   </div>
                 </div>
-                <div className="text-4xl font-bold mb-2">{stat.value}</div>
-                <div className="text-blue-200">{stat.label}</div>
+                <div className="text-5xl font-bold mb-2 text-gradient bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text">
+                  {stat.value}
+                </div>
+                <div className="text-blue-200 font-medium">{stat.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Upcoming Highlights / Notices */}
-      <section className="py-16 bg-white">
+      {/* Notice Carousel with 3D Effect */}
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-800">CGTTI Announcements</h2>
-            <div className="flex space-x-2">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-12 animate-slideUp">
+            <div>
+              <h2 className="text-4xl font-bold text-gray-800 mb-2">
+                Latest Announcements
+              </h2>
+              <p className="text-gray-600">Stay updated with CGTTI news and events</p>
+            </div>
+            <div className="flex space-x-2 mt-4 md:mt-0">
               <button
                 onClick={prevSlide}
-                className="p-2 rounded-full bg-gray-100 hover:bg-gray-200"
+                className="p-3 rounded-full bg-white shadow-lg hover:shadow-xl hover:scale-110 transition-all"
                 aria-label="Previous notice"
               >
-                <ChevronLeft size={20} />
+                <ChevronLeft size={24} className="text-blue-600" />
               </button>
               <button
                 onClick={nextSlide}
-                className="p-2 rounded-full bg-gray-100 hover:bg-gray-200"
+                className="p-3 rounded-full bg-white shadow-lg hover:shadow-xl hover:scale-110 transition-all"
                 aria-label="Next notice"
               >
-                <RightIcon size={20} />
+                <RightIcon size={24} className="text-blue-600" />
               </button>
             </div>
           </div>
           
-          <div className="relative">
-            <div className="overflow-hidden">
-              <div 
-                className="flex transition-transform duration-300 ease-in-out"
-                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-              >
-                {notices.map((notice, index) => (
-                  <div key={index} className="w-full flex-shrink-0 px-2">
-                    <div className="bg-gradient-to-br from-blue-50 to-white p-6 rounded-2xl shadow-lg border border-blue-100">
-                      <div className="flex items-center justify-between mb-4">
-                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                          notice.type === 'event' ? 'bg-blue-100 text-blue-800' :
-                          notice.type === 'announcement' ? 'bg-green-100 text-green-800' :
-                          notice.type === 'opportunity' ? 'bg-purple-100 text-purple-800' :
-                          'bg-orange-100 text-orange-800'
-                        }`}>
-                          {notice.type.charAt(0).toUpperCase() + notice.type.slice(1)}
-                        </span>
-                        <span className="text-sm text-gray-500">{notice.date}</span>
+          <div className="relative h-96">
+            {notices.map((notice, index) => {
+              const offset = (index - currentSlide + notices.length) % notices.length;
+              const isActive = offset === 0;
+              const isNext = offset === 1;
+              const isPrev = offset === notices.length - 1;
+              
+              return (
+                <div
+                  key={index}
+                  className={`absolute top-0 w-full md:w-3/4 lg:w-2/3 transition-all duration-500 ease-in-out ${
+                    isActive 
+                      ? 'left-1/2 transform -translate-x-1/2 z-30 scale-100 opacity-100' 
+                      : isNext
+                      ? 'left-3/4 transform translate-x-1/4 z-20 scale-90 opacity-70'
+                      : isPrev
+                      ? 'left-1/4 transform -translate-x-3/4 z-20 scale-90 opacity-70'
+                      : 'opacity-0 scale-50'
+                  }`}
+                >
+                  <div className={`bg-white rounded-2xl shadow-xl overflow-hidden border-2 ${
+                    isActive ? 'border-blue-500' : 'border-gray-200'
+                  }`}>
+                    <div className="p-8">
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center space-x-4">
+                          <span className="text-3xl">{notice.icon}</span>
+                          <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
+                            notice.type === 'event' ? 'bg-blue-100 text-blue-800' :
+                            notice.type === 'announcement' ? 'bg-green-100 text-green-800' :
+                            notice.type === 'opportunity' ? 'bg-purple-100 text-purple-800' :
+                            'bg-orange-100 text-orange-800'
+                          }`}>
+                            {notice.type.charAt(0).toUpperCase() + notice.type.slice(1)}
+                          </span>
+                        </div>
+                        <span className="text-gray-500 font-medium">{notice.date}</span>
                       </div>
-                      <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                      <h3 className="text-2xl font-bold text-gray-800 mb-4">
                         {notice.title}
                       </h3>
-                      <p className="text-gray-600 mb-4">{notice.description}</p>
-                      <Link to="/events" className="text-blue-600 hover:text-blue-800 font-medium flex items-center">
-                        View Details <ChevronRight className="ml-1" size={16} />
+                      <p className="text-gray-600 text-lg mb-6">{notice.description}</p>
+                      <Link 
+                        to="/notices" 
+                        className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold group"
+                      >
+                        Read Full Story
+                        <ChevronRight className="ml-2 group-hover:translate-x-2 transition-transform" size={20} />
                       </Link>
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Dots Indicator */}
-          <div className="flex justify-center mt-8 space-x-2">
-            {notices.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  index === currentSlide ? 'bg-blue-600 scale-125' : 'bg-gray-300 hover:bg-gray-400'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Upcoming Events Section */}
-      <section className="py-16 bg-gray-50">
+      {/* Events Section with Hover Effects */}
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center mb-12">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-800 mb-2">Upcoming Events</h2>
-              <p className="text-gray-600">Technical workshops, networking sessions, and alumni gatherings</p>
-            </div>
-            <Link to="/events" className="text-blue-600 hover:text-blue-800 font-medium flex items-center">
-              View All Events <ChevronRight className="ml-1" size={20} />
-            </Link>
+          <div className="text-center mb-16 animate-slideUp">
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">
+              Upcoming Events & Workshops
+            </h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Join fellow alumni for technical workshops, networking sessions, and alumni gatherings
+            </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {events.map((event, index) => (
-              <div key={index} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow border border-gray-100">
-                <div className="p-6">
-                  <div className="flex items-center text-blue-600 mb-4">
-                    <Calendar className="mr-2" size={20} />
-                    <span className="font-medium">{event.date}</span>
+              <div 
+                key={index}
+                className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 animate-slideUp"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                {/* Event Image with Overlay */}
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={event.image}
+                    alt={event.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute top-4 right-4">
+                    <span className="px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-sm font-semibold text-blue-600">
+                      {event.date}
+                    </span>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                </div>
+                
+                {/* Event Content */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors">
                     {event.title}
                   </h3>
                   <div className="space-y-2 text-gray-600 mb-4">
                     <div className="flex items-center">
-                      <ClockIcon size={16} className="mr-2" />
+                      <ClockIcon size={16} className="mr-2 text-blue-500" />
                       {event.time}
                     </div>
                     <div className="flex items-center">
-                      <MapPin size={16} className="mr-2" />
+                      <MapPin size={16} className="mr-2 text-blue-500" />
                       <span className="text-sm">{event.location}</span>
                     </div>
                   </div>
                   <p className="text-gray-500 text-sm mb-6">{event.description}</p>
-                  <div className="flex space-x-2">
-                    <Link 
-                      to="/register-event" 
-                      className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium text-center"
-                    >
-                      Register
-                    </Link>
-                    <button className="flex-1 border border-blue-600 text-blue-600 py-2 rounded-lg hover:bg-blue-50 transition-colors text-sm font-medium">
+                  <div className="flex space-x-3">
+                    <button className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2.5 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105 text-sm font-semibold shadow-md hover:shadow-lg">
+                      Register Now
+                    </button>
+                    <button className="px-4 py-2.5 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-sm font-semibold">
                       Details
                     </button>
                   </div>
@@ -480,73 +521,102 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Photo Gallery Preview */}
-      <section className="py-16 bg-white">
+      {/* Gallery Section with Masonry Layout */}
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center mb-12">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-800 mb-2">CGTTI Memories</h2>
-              <p className="text-gray-600">Moments from campus life and alumni gatherings</p>
-            </div>
-            <Link to="/gallery" className="text-blue-600 hover:text-blue-800 font-medium flex items-center">
-              View Full Gallery <ChevronRight className="ml-1" size={20} />
-            </Link>
+          <div className="text-center mb-16 animate-slideUp">
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">
+              CGTTI Gallery
+            </h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Moments from campus life, technical workshops, and alumni gatherings
+            </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {galleryImages.map((image) => (
-              <div key={image.id} className="group relative aspect-square overflow-hidden rounded-lg cursor-pointer">
-                <div className="w-full h-full bg-gray-200 animate-pulse"></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                  <span className="text-white text-sm font-medium">{image.alt}</span>
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+            {galleryImages.map((image, index) => (
+              <div 
+                key={image.id}
+                className="break-inside-avoid relative group cursor-pointer animate-fadeIn"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="relative overflow-hidden rounded-xl shadow-lg group-hover:shadow-2xl transition-shadow duration-500">
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                    <div className="text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                      <p className="font-semibold">{image.alt}</p>
+                      <p className="text-sm opacity-90">Click to view full size</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-          
-          {/* Note for adding real images */}
-          <div className="mt-8 text-center text-gray-500 text-sm">
-            <p>Add your CGTTI photos to the <code>/public/images/</code> folder</p>
-            <p>Suggested: cgtti-campus.jpg, graduation.jpg, workshop.jpg, sports.jpg, alumni-meet.jpg, award.jpg</p>
-          </div>
         </div>
       </section>
 
-      {/* Quick Links / Shortcuts */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-blue-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-white text-center mb-12">
-            Quick Access for Alumni
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      {/* Quick Links with Gradient Animations */}
+      <section className="py-20 bg-gradient-to-r from-blue-600 via-blue-700 to-purple-700 relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-shimmer"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-white mb-4">
+              Quick Access Portal
+            </h2>
+            <p className="text-blue-100 text-lg">
+              Everything you need as a CGTTI alumnus in one place
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {quickLinks.map((link, index) => (
               <Link
                 key={index}
                 to={link.path}
-                className={`${link.color} text-white p-8 rounded-2xl text-center hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl`}
+                className={`${link.color} text-white p-8 rounded-2xl text-center transform hover:scale-105 transition-all duration-500 hover:shadow-2xl group animate-slideUp`}
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="flex flex-col items-center">
-                  <link.icon size={32} className="mb-4" />
-                  <span className="font-semibold">{link.label}</span>
+                  <div className="mb-6 p-4 bg-white/20 rounded-full group-hover:rotate-12 transition-transform duration-500">
+                    <link.icon size={40} className="text-white" />
+                  </div>
+                  <span className="font-bold text-xl mb-2">{link.label}</span>
+                  <div className="w-0 group-hover:w-12 h-0.5 bg-white/50 transition-all duration-500"></div>
                 </div>
               </Link>
             ))}
           </div>
           
-          {/* Additional CTAs */}
+          {/* Additional Features */}
           <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
-              <h4 className="text-white font-semibold mb-2">Find Alumni</h4>
-              <p className="text-blue-100 text-sm">Connect with batchmates and colleagues</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
-              <h4 className="text-white font-semibold mb-2">Job Portal</h4>
-              <p className="text-blue-100 text-sm">Career opportunities for CGTTI graduates</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
-              <h4 className="text-white font-semibold mb-2">Mentorship</h4>
-              <p className="text-blue-100 text-sm">Guide current CGTTI students</p>
-            </div>
+            {[
+              { icon: '👥', title: 'Find Batchmates', desc: 'Connect with your CGTTI colleagues' },
+              { icon: '💼', title: 'Job Portal', desc: 'Career opportunities for graduates' },
+              { icon: '🎯', title: 'Mentorship Program', desc: 'Guide current CGTTI students' },
+            ].map((feature, index) => (
+              <div 
+                key={index}
+                className="bg-white/10 backdrop-blur-sm p-6 rounded-xl hover:bg-white/20 transition-all duration-500 group hover:scale-105 cursor-pointer animate-slideUp"
+                style={{ animationDelay: `${0.5 + index * 0.1}s` }}
+              >
+                <div className="flex items-center space-x-4">
+                  <span className="text-3xl group-hover:animate-bounce">{feature.icon}</span>
+                  <div>
+                    <h4 className="text-white font-semibold text-lg">{feature.title}</h4>
+                    <p className="text-blue-100 text-sm mt-1">{feature.desc}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -554,7 +624,13 @@ export const Home: React.FC = () => {
   );
 };
 
-// Custom Clock Icon Component
+// Custom Icons
+const ChevronDown = ({ size, className }: { size: number; className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M6 9l6 6 6-6"/>
+  </svg>
+);
+
 const ClockIcon = ({ size, className }: { size: number; className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
     <circle cx="12" cy="12" r="10"></circle>
