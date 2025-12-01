@@ -35,7 +35,7 @@ export const Sidebar: React.FC = () => {
       label: 'Members Directory', 
       icon: <Users className="w-5 h-5" />,
       submenu: [
-        { path: '/members/all', label: 'All Members' },
+        { path: '/members', label: 'All Members' },
         { path: '/members/batchmates', label: 'Batchmates' },
         { path: '/members/search', label: 'Search Alumni' },
       ]
@@ -407,7 +407,7 @@ export const Sidebar: React.FC = () => {
       </aside>
 
       {/* Custom Animations */}
-      <style>{`
+      <style jsx>{`
         @keyframes slideIn {
           from {
             opacity: 0;
