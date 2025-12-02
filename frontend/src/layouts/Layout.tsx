@@ -64,9 +64,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
     '/members', 
     '/letters', 
     '/reports',
+    '/admin/events',           // Add this
     '/admin/eventscreate',     // Add this
-    '/admin/events/edit',      // Add this for edit routes (partial match)
-    '/events'                  // Add this for event registrations (partial match)
+    '/admin/events/edit',      // Add this for edit routes (partial match)      
   ];
   
   // Check if current path matches any admin route
