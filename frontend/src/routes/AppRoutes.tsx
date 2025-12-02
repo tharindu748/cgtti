@@ -5,6 +5,7 @@ import { Login } from '../pages/Login';
 import { Dashboard } from '../pages/Dashboard';
 import { Members } from '../pages/Members';
 import { Home } from '../pages/Home';
+import { EventsPage } from '../pages/Event';
 
 
 // Temporary placeholder components
@@ -30,6 +31,10 @@ const AppRoutes: React.FC = () => {
       <Route 
         path="/login" 
         element={!user ? <Login /> : <Navigate to="/dashboard" />} 
+      />
+      <Route 
+        path="/events" 
+        element={user ? <EventsPage /> : <Navigate to="/login" />} 
       />
       <Route 
         path="/register" 
