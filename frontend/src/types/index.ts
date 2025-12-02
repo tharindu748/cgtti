@@ -199,3 +199,52 @@ export enum RegistrationType {
   PAID = 'PAID',
   INVITE_ONLY = 'INVITE_ONLY'
 }
+// Add this to your types.ts file
+export interface Event {
+  id: string;
+  title: string;
+  description: string;
+  shortDescription?: string;
+  eventDate: string;
+  startTime: string;
+  endTime: string;
+  location: string;
+  address: string;
+  city: string;
+  country: string;
+  eventType: 'IN_PERSON' | 'VIRTUAL' | 'HYBRID';
+  category: string;
+  tags: string[];
+  status: 'DRAFT' | 'PUBLISHED' | 'CANCELLED';
+  visibility: 'PUBLIC' | 'PRIVATE' | 'ALUMNI_ONLY';
+  registrationType: 'FREE' | 'PAID' | 'INVITE_ONLY';
+  price?: number;
+  currency: string;
+  capacity: number;
+  waitlistEnabled: boolean;
+  registrationDeadline?: string;
+  coverImage?: string;
+  galleryImages?: string[];
+  organizerName: string;
+  organizerEmail: string;
+  organizerPhone?: string;
+  agenda?: AgendaItem[];
+  speakers?: Speaker[];
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+}
+
+export interface AgendaItem {
+  time: string;
+  title: string;
+  description: string;
+  speaker?: string;
+}
+
+export interface Speaker {
+  name: string;
+  role: string;
+  bio: string;
+  photo?: string;
+}

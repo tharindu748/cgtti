@@ -146,8 +146,9 @@ export const eventsAPI = {
       console.error('Error checking out:', error.response?.data || error.message);
       throw new Error(error.response?.data?.error || 'Failed to check out');
     }
-  }
-    // Event creation/update
+  },
+
+  // Event creation/update
   createEvent: async (data: any) => {
     try {
       const response = await axios.post(`${API_BASE_URL}/events`, data, getAuthHeaders());
