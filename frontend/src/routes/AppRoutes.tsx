@@ -85,7 +85,7 @@ import { EventsPage } from '../pages/Event';
 const Register = () => <div>Register Page - Coming Soon</div>;
 const Letters = () => <div>Letters Page - Coming Soon</div>;
 const Reports = () => <div>Reports Page - Coming Soon</div>;
-const AdminEvents = () => <div>Admin Events Page - Coming Soon</div>; // Moved outside
+// const AdminEvents = () => <div>Admin Events Page - Coming Soon</div>; // Moved outside
 
 const AppRoutes: React.FC = () => {
   const { user, loading } = useAuth();
@@ -132,7 +132,7 @@ const AppRoutes: React.FC = () => {
       />
       <Route 
         path="/admin/events"
-        element={user?.role === 'ADMIN' ? <AdminEvents /> : <Navigate to="/dashboard" />}
+        element={user? <Reports />  : <Navigate to="/dashboard" />}
       />
       <Route 
         path="*" 

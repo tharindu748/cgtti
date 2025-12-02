@@ -6,7 +6,7 @@ import {
   Download, Filter, Search, BarChart3,
   Mail, QrCode, Upload
 } from 'lucide-react';
-import { useAuth } from '@context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 // Mock data - replace with API calls
 const mockEvents = [
