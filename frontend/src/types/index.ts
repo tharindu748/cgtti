@@ -135,3 +135,67 @@ export interface LetterData {
   generatedDate: string;
   currentDate: string;
 }
+
+// Add these interfaces to your existing types
+export interface EventRegistration {
+  id: string;
+  eventId: string;
+  memberId: string;
+  status: RegistrationStatus;
+  ticketNumber?: string;
+  notes?: string;
+  paymentStatus: PaymentStatus;
+  paymentAmount?: number;
+  paymentMethod?: string;
+  paymentDate?: string;
+  paymentReference?: string;
+  checkInTime?: string;
+  checkOutTime?: string;
+  guests: number;
+  dietaryRequirements?: string;
+  specialRequests?: string;
+  registrationDate: string;
+  createdAt: string;
+  updatedAt: string;
+  event?: Event;
+  member?: Member;
+}
+
+export interface RegistrationFormData {
+  eventId: string;
+  memberId: string;
+  guests?: number;
+  notes?: string;
+  dietaryRequirements?: string;
+  specialRequests?: string;
+}
+
+export interface RegistrationStatistics {
+  totalRegistrations: number;
+  confirmedRegistrations: number;
+  waitlisted: number;
+  attended: number;
+  pendingPayments: number;
+  totalRevenue: number;
+  capacity: number;
+  remainingCapacity: number;
+  attendanceRate: number;
+  paidEvent: boolean;
+  ticketPrice: number;
+}
+
+// Add to existing enums
+export enum RegistrationStatus {
+  PENDING = 'PENDING',
+  CONFIRMED = 'CONFIRMED',
+  WAITLISTED = 'WAITLISTED',
+  CANCELLED = 'CANCELLED',
+  ATTENDED = 'ATTENDED',
+  NO_SHOW = 'NO_SHOW'
+}
+
+export enum RegistrationType {
+  FREE = 'FREE',
+  PAID = 'PAID',
+  INVITE_ONLY = 'INVITE_ONLY'
+}

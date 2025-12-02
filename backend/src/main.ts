@@ -47,6 +47,7 @@ import authRoutes from './auth/auth.routes.js';
 import memberRoutes from './users/member.routes.js';
 import letterRoutes from './letters/letter.routes.js';
 import eventRoutes from './events/event.routes.js';
+import eventRegistrationRoutes from './events/event-registration.routes.js';
 
 dotenv.config();
 
@@ -72,6 +73,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/members', memberRoutes);
 app.use('/api/letters', letterRoutes);
 app.use('/api/events', eventRoutes);
+app.use('/api/event-registrations', eventRegistrationRoutes);
 
 
 // Health check
