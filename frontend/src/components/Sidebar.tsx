@@ -72,9 +72,9 @@ export const Sidebar: React.FC = () => {
       notification: 5,
       submenu: [
         { path: '/admin/events', label: 'All Events' },
-        { path: '/admin/events/create', label: 'Create Event' },
+        { path: '/admin/eventscreate', label: 'Create Event' },
         { path: '/events/:eventId/registrations', label: 'Registrations' },
-        { path: '/admin/events/analytics', label: 'Analytics' },
+        // { path: '/admin/events/analytics', label: 'Analytics' },
       ]
     },
     { 

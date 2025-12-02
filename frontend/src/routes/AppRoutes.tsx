@@ -140,14 +140,14 @@ const AppRoutes: React.FC = () => {
         element={user? <AdminEvents />  : <Navigate to="/dashboard" />}
       />
       <Route
-  path="/events/:eventId/registrations"
-  element={user ? <EventRegistrationPage /> : <Navigate to="/login" />}
-/>
+        path="/events/:eventId/registrations"
+        element={user ? <EventRegistrationPage /> : <Navigate to="/login" />}
+      />
 
-<Route
-  path="/admin/events/create"
-  element={user ? <EventCreatePage /> : <Navigate to="/dashboard" />}
-/>
+      <Route
+        path="/admin/eventscreate"
+        element={user ? <EventCreatePage /> : <Navigate to="/dashboard" />}
+      />
       <Route 
         path="*" 
         element={<Navigate to={user ? "/dashboard" : "/"} />} 
