@@ -98,3 +98,154 @@ enum LivingStatus {
   ALIVE
   DECEASED
 }
+
+// Add after the existing models
+model Event {
+  id                  String   @id @default(cuid())
+  title               String
+  description         String
+  shortDescription    String?
+  
+  // Date and time
+  eventDate           DateTime
+  startTime           String
+  endTime             String
+  
+  // Location
+  location            String
+  address             String
+  city                String
+  country             String
+  
+  // Type and category
+  eventType           EventType @default(IN_PERSON)
+  category            EventCategory @default(GENERAL)
+  tags                String[]
+  
+  // Status and visibility
+  status              EventStatus @default(DRAFT)
+  visibility          EventVisibility @default(PUBLIC)
+  
+  // Registration settings
+  registrationType    RegistrationType @default(FREE)
+  price               Decimal? @default(0)
+  currency            String? @default("LKR")
+  capacity            Int @default(100)
+  waitlistEnabled     Boolean @default(false)
+  registrationDeadline DateTime?
+  
+  // Media
+  coverImage          String?
+  galleryImages       String[]
+  
+  // Organizer info
+  organizerName       String
+  organizerEmail      String
+  organizerPhone      String?
+  
+  // Additional details
+  agenda              Json? // Store as JSON array
+  speakers            Json? // Store as JSON array
+  
+  // Statistics
+  registeredCount     Int @default(0)
+  attendedCount       Int @default(0)
+  
+  // Timestamps
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  publishedAt         DateTime?
+  
+  // Relations
+  registrations       EventRegistration[]
+  createdBy           String
+  updatedBy           String
+  
+  @@map("events")
+}
+
+model EventRegistration {
+  id                  String   @id @default(cuid())
+  eventId             String
+  event               Event    @relation(fields: [eventId], references: [id])
+  
+  memberId            String
+  member              Member   @relation(fields: [memberId], references: [id])
+  
+  // Registration details
+  registrationDate    DateTime @default(now())
+  status              RegistrationStatus @default(PENDING)
+  ticketNumber        String? @unique
+  notes               String?
+  
+  // Payment info
+  paymentStatus       PaymentStatus @default(NON_PAID)
+  paymentAmount       Decimal?
+  paymentMethod       String?
+  paymentDate         DateTime?
+  paymentReference    String?
+  
+  // Attendance tracking
+  checkInTime         DateTime?
+  checkOutTime        DateTime?
+  
+  // Additional info
+  guests              Int @default(0)
+  dietaryRequirements String?
+  specialRequests     String?
+  
+  // Timestamps
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  
+  @@unique([eventId, memberId])
+  @@map("event_registrations")
+}
+
+// Enums for events
+enum EventType {
+  IN_PERSON
+  VIRTUAL
+  HYBRID
+}
+
+enum EventCategory {
+  REUNION
+  CAREER
+  WORKSHOP
+  SEMINAR
+  CONFERENCE
+  SOCIAL
+  SPORTS
+  NETWORKING
+  CHARITY
+  GENERAL
+}
+
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  CANCELLED
+  COMPLETED
+}
+
+enum EventVisibility {
+  PUBLIC
+  PRIVATE
+  ALUMNI_ONLY
+}
+
+enum RegistrationType {
+  FREE
+  PAID
+  INVITE_ONLY
+}
+
+enum RegistrationStatus {
+  PENDING
+  CONFIRMED
+  WAITLISTED
+  CANCELLED
+  ATTENDED
+  NO_SHOW
+}

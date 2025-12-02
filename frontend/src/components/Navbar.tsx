@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
@@ -20,10 +19,10 @@ export const Navbar: React.FC = () => {
 
   const navItems = [
     { path: '/', label: 'Home', icon: Home },
-    { path: '/about', label: 'About', icon: BookOpen },
     { path: '/events', label: 'Events', icon: Calendar },
     { path: '/gallery', label: 'Gallery', icon: ImageIcon },
     { path: '/membership', label: 'Membership', icon: Shield },
+    { path: '/about', label: 'About', icon: BookOpen },
     { path: '/contact', label: 'Contact', icon: Mail },
   ];
 
@@ -77,6 +76,9 @@ export const Navbar: React.FC = () => {
                     src={cgttiLogo} 
                     alt="CGTTI Logo" 
                     className="w-full h-full object-contain p-1 bg-white"
+                    width="56"
+                    height="56"
+                    loading="lazy"
                   />
                   
                   {/* Overlay for hover effect */}
@@ -149,6 +151,7 @@ export const Navbar: React.FC = () => {
                     type="text"
                     placeholder="Search alumni..."
                     className="w-56 pl-10 pr-4 py-2.5 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-400 focus:bg-white transition-all duration-300 focus:w-64 focus:shadow-sm"
+                    aria-label="Search alumni"
                   />
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 group-hover:text-blue-500 transition-colors" />
                 </div>
@@ -160,6 +163,8 @@ export const Navbar: React.FC = () => {
                   <button
                     onClick={() => setShowUserMenu(!showUserMenu)}
                     className="flex items-center space-x-3 bg-white px-4 py-2.5 rounded-xl transition-all duration-300 group border border-gray-200 hover:border-blue-300 hover:shadow-sm"
+                    aria-label="User menu"
+                    aria-expanded={showUserMenu}
                   >
                     <div className="relative">
                       <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-500 rounded-full flex items-center justify-center text-white font-semibold shadow-sm">
@@ -252,6 +257,7 @@ export const Navbar: React.FC = () => {
               <button 
                 onClick={handleAuthClick}
                 className="p-2.5 text-gray-600 hover:text-blue-600 transition-colors rounded-lg hover:bg-gray-100"
+                aria-label={user ? "Go to dashboard" : "Login"}
               >
                 {user ? (
                   <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-500 rounded-full flex items-center justify-center text-white font-semibold text-sm">
@@ -264,6 +270,8 @@ export const Navbar: React.FC = () => {
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2.5 text-gray-600 hover:text-blue-600 transition-colors rounded-lg hover:bg-gray-100 relative group"
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isOpen}
               >
                 {isOpen ? (
                   <X className="w-6 h-6 animate-rotateIn" />
@@ -283,6 +291,7 @@ export const Navbar: React.FC = () => {
           <div 
             className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 animate-fadeIn"
             onClick={() => setIsOpen(false)}
+            aria-hidden="true"
           />
           
           {/* Mobile Menu Panel */}
@@ -297,6 +306,9 @@ export const Navbar: React.FC = () => {
                       src={cgttiLogo} 
                       alt="CGTTI Logo" 
                       className="w-full h-full object-contain"
+                      width="40"
+                      height="40"
+                      loading="lazy"
                     />
                   </div>
                   <div>
@@ -307,6 +319,7 @@ export const Navbar: React.FC = () => {
                 <button
                   onClick={() => setIsOpen(false)}
                   className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+                  aria-label="Close menu"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -318,6 +331,7 @@ export const Navbar: React.FC = () => {
                   type="text"
                   placeholder="Search alumni, events..."
                   className="w-full pl-10 pr-4 py-3 bg-white/20 backdrop-blur-sm rounded-xl border border-white/30 text-white placeholder-white/70 focus:outline-none focus:bg-white/30 focus:border-white/50"
+                  aria-label="Search"
                 />
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70 w-4 h-4" />
               </div>
@@ -360,6 +374,7 @@ export const Navbar: React.FC = () => {
                     `}
                     style={{ animationDelay: `${index * 0.05}s` }}
                     onClick={() => setIsOpen(false)}
+                    aria-current={location.pathname === item.path ? "page" : undefined}
                   >
                     <div className="flex items-center">
                       <div className={`w-9 h-9 rounded-lg flex items-center justify-center mr-3 ${
