@@ -7,7 +7,7 @@ import {
   Plus, Trash2, Copy, AlertCircle, CheckCircle,
   ChevronLeft, Loader, Tag, FileText, Video,
   Wifi, Users as UsersIcon, CreditCard,
-  Zap, Award, Heart, TrendingUp
+  Zap, Award, Heart, TrendingUp, Edit 
 } from 'lucide-react';
 import { eventsAPI } from '../../api/events';
 import { useAuth } from '../../context/AuthContext';
