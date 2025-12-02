@@ -135,7 +135,15 @@ export const EventRegistrationPage: React.FC = () => {
     }
 
     try {
-      const data = await membersAPI.getAll({ search: query, limit: 10 });
+      const data = await membersAPI.getAll({
+          search: query, limit: 10,
+          trade: '',
+          district: '',
+          membershipYear: '',
+          livingStatus: '',
+          paymentStatus: '',
+          isVerified: ''
+      });
       setSearchResults(data.members);
     } catch (error) {
       console.error('Failed to search members:', error);
