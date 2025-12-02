@@ -146,7 +146,7 @@ const AppRoutes: React.FC = () => {
 
       <Route
         path="/admin/eventscreate"
-        element={user ? <EventCreatePage /> : <Navigate to="/dashboard" />}
+        element={user ? <EventCreatePage /> : <Navigate to="/admin/eventscreate" />}
       />
       <Route 
         path="*" 
