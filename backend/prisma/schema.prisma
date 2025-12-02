@@ -40,6 +40,8 @@ model Member {
   GeneratedLetter  GeneratedLetter[]
   user             User?             @relation(fields: [userId], references: [id])
 
+  eventRegistrations EventRegistration[]
+
   @@map("members")
 }
 
