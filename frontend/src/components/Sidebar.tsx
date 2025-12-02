@@ -36,7 +36,7 @@ export const Sidebar: React.FC = () => {
       icon: <Users className="w-5 h-5" />,
       submenu: [
         { path: '/members', label: 'All Members' },
-        { path: '/members/batchmates', label: 'Batchmates' },
+        // { path: '/members/batchmates', label: 'Batchmates' },
         { path: '/members/search', label: 'Search Alumni' },
       ]
     },
