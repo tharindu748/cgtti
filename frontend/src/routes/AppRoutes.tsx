@@ -208,7 +208,7 @@ const AppRoutes: React.FC = () => {
       {/* Protected Routes for All Users */}
       <Route 
         path="/events" 
-        element={user ? <EventsPage /> : <Navigate to="/events" />} 
+        element={<EventsPage />} 
       />
       <Route 
         path="/dashboard" 
