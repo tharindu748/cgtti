@@ -73,9 +73,9 @@ export const Footer: React.FC = () => {
 
   const quickLinks = [
     { path: '/about', label: 'About CGTTI' },
-    { path: '/admissions', label: 'Admissions' },
-    { path: '/courses', label: 'Technical Courses' },
-    { path: '/facilities', label: 'Campus Facilities' },
+    // { path: '/admissions', label: 'Admissions' },
+    // { path: '/courses', label: 'Technical Courses' },
+    // { path: '/facilities', label: 'Campus Facilities' },
     { path: '/partners', label: 'Industry Partners' },
     { path: '/careers', label: 'Career Services' },
   ];
@@ -412,7 +412,7 @@ export const Footer: React.FC = () => {
               </Link>
               <div className="flex items-center text-gray-400 text-sm">
                 <Heart className="w-4 h-4 mr-1 text-red-400 animate-pulse" />
-                Made with excellence
+                k t lakmal
               </div>
             </div>
           </div>
