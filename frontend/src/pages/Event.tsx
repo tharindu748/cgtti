@@ -28,8 +28,8 @@ const events = [
     image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
     description: "Join us for the most anticipated event of the year! Reconnect with old friends, meet new alumni, and celebrate the legacy of CGTTI.",
     speakers: [
-      { name: "Dr. Samantha Perera", role: "Class of 1995, CEO Tech Solutions Ltd." },
-      { name: "Mr. Rajitha Fernando", role: "Class of 2005, Engineering Director" }
+      { name: "Dr. tharindu", role: "Class of 1995, CEO Tech Solutions Ltd." },
+      { name: "Mr. tharindu lakmal", role: "Class of 2005, Engineering Director" }
     ],
     attendees: 150,
     capacity: 200,
@@ -50,8 +50,8 @@ const events = [
     image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
     description: "Connect with top tech companies and explore career opportunities. Perfect for recent graduates and experienced professionals.",
     speakers: [
-      { name: "Ms. Nirmali Silva", role: "HR Director, Virtusa" },
-      { name: "Mr. Dilshan Rathnayake", role: "CTO, WSO2" }
+      { name: "Ms. lakmal Silva", role: "HR Director, Virtusa" },
+      { name: "Mr. tharindu lakmal", role: "CTO, WSO2" }
     ],
     attendees: 300,
     capacity: 350,
@@ -72,8 +72,8 @@ const events = [
     image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
     description: "Learn the fundamentals of starting and growing your own business from successful alumni entrepreneurs.",
     speakers: [
-      { name: "Mr. Kumar De Silva", role: "Founder, Startup Lanka" },
-      { name: "Ms. Chathuri Jayasena", role: "Investor, Angel Network" }
+      { name: "Mr. tharindu lakmal", role: "Founder, Startup Lanka" },
+      { name: "Ms. lakmal Jayasena", role: "Investor, Angel Network" }
     ],
     attendees: 85,
     capacity: 100,
