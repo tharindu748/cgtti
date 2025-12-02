@@ -82,6 +82,7 @@ import { Home } from '../pages/Home';
 import { EventsPage } from '../pages/Event';
 import { AdminEvents } from '../pages/admin/Events';
 import { EventRegistrationPage } from '../pages/admin/EventRegistration';
+import { EventCreatePage } from '../pages/admin/EventCreate';
 
 
 
@@ -141,6 +142,11 @@ const AppRoutes: React.FC = () => {
       <Route
   path="/events/:eventId/registrations"
   element={user ? <EventRegistrationPage /> : <Navigate to="/login" />}
+/>
+
+<Route
+  path="/admin/events/create"
+  element={user ? <EventCreatePage /> : <Navigate to="/dashboard" />}
 />
       <Route 
         path="*" 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Event, EventRegistration, RegistrationFormData, RegistrationStatistics } from '@types';
+import { Event, EventRegistration, RegistrationFormData, RegistrationStatistics } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
 
@@ -145,6 +145,97 @@ export const eventsAPI = {
     } catch (error: any) {
       console.error('Error checking out:', error.response?.data || error.message);
       throw new Error(error.response?.data?.error || 'Failed to check out');
+    }
+  }
+    // Event creation/update
+  createEvent: async (data: any) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/events`, data, getAuthHeaders());
+      return response.data;
+    } catch (error: any) {
+      console.error('Error creating event:', error.response?.data || error.message);
+      throw new Error(error.response?.data?.error || 'Failed to create event');
+    }
+  },
+
+  updateEvent: async (id: string, data: any) => {
+    try {
+      const response = await axios.put(`${API_BASE_URL}/events/${id}`, data, getAuthHeaders());
+      return response.data;
+    } catch (error: any) {
+      console.error('Error updating event:', error.response?.data || error.message);
+      throw new Error(error.response?.data?.error || 'Failed to update event');
+    }
+  },
+
+  deleteEvent: async (id: string) => {
+    try {
+      const response = await axios.delete(`${API_BASE_URL}/events/${id}`, getAuthHeaders());
+      return response.data;
+    } catch (error: any) {
+      console.error('Error deleting event:', error.response?.data || error.message);
+      throw new Error(error.response?.data?.error || 'Failed to delete event');
+    }
+  },
+
+  duplicateEvent: async (id: string) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/events/${id}/duplicate`, {}, getAuthHeaders());
+      return response.data;
+    } catch (error: any) {
+      console.error('Error duplicating event:', error.response?.data || error.message);
+      throw new Error(error.response?.data?.error || 'Failed to duplicate event');
+    }
+  },
+
+  publishEvent: async (id: string) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/events/${id}/publish`, {}, getAuthHeaders());
+      return response.data;
+    } catch (error: any) {
+      console.error('Error publishing event:', error.response?.data || error.message);
+      throw new Error(error.response?.data?.error || 'Failed to publish event');
+    }
+  },
+
+  // Get categories and types
+  getEventCategories: async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/events/categories`);
+      return response.data;
+    } catch (error: any) {
+      console.error('Error fetching categories:', error.response?.data || error.message);
+      return [];
+    }
+  },
+
+  getEventTypes: async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/events/types`);
+      return response.data;
+    } catch (error: any) {
+      console.error('Error fetching event types:', error.response?.data || error.message);
+      return [];
+    }
+  },
+
+  // Upload image
+  uploadEventImage: async (imageFile: File) => {
+    try {
+      const formData = new FormData();
+      formData.append('image', imageFile);
+      
+      const response = await axios.post(`${API_BASE_URL}/events/upload-image`, formData, {
+        ...getAuthHeaders(),
+        headers: {
+          ...getAuthHeaders().headers,
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      return response.data;
+    } catch (error: any) {
+      console.error('Error uploading image:', error.response?.data || error.message);
+      throw new Error(error.response?.data?.error || 'Failed to upload image');
     }
   }
 };
