@@ -18,7 +18,21 @@ export const Sidebar: React.FC = () => {
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
   const { user, logout } = useAuth();
 
-  const menuItems = [
+  type SubmenuItem = {
+    path: string;
+    label: string;
+  };
+
+  type MenuItem = {
+    path: string;
+    label: string;
+    icon: React.ReactNode;
+    notification?: number;
+    badge?: string;
+    submenu?: SubmenuItem[];
+  };
+
+  const menuItems: MenuItem[] = [
     { 
       path: '/dashboard', 
       label: 'Dashboard', 
@@ -80,7 +94,7 @@ export const Sidebar: React.FC = () => {
     },
      ...(user?.role === 'ADMIN' ? [
     { path: '/admin/events', label: 'Event Management', icon: '⚙️' }
-  ] : [])
+  ] as MenuItem[] : [])
   ];
 
   const toggleSidebar = () => {
@@ -385,7 +399,7 @@ export const Sidebar: React.FC = () => {
       </aside>
 
       {/* Custom Animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes slideIn {
           from {
             opacity: 0;
