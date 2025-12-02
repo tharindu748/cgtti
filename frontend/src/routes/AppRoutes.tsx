@@ -80,6 +80,9 @@ import { Dashboard } from '../pages/Dashboard';
 import { Members } from '../pages/Members';
 import { Home } from '../pages/Home';
 import { EventsPage } from '../pages/Event';
+import { AdminEvents } from '../pages/admin/Events';
+
+
 
 // Temporary placeholder components
 const Register = () => <div>Register Page - Coming Soon</div>;
@@ -132,7 +135,7 @@ const AppRoutes: React.FC = () => {
       />
       <Route 
         path="/admin/events"
-        element={user? <Reports />  : <Navigate to="/dashboard" />}
+        element={user? <AdminEvents />  : <Navigate to="/dashboard" />}
       />
       <Route 
         path="*" 
