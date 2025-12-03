@@ -319,7 +319,7 @@ export const Footer: React.FC = () => {
               </form> */}
 
               {/* Social Media */}
-              <div className="mt-8">
+              {/* <div className="mt-8"> */}
                 <h4 className="text-sm font-semibold text-white mb-3">Connect With Us</h4>
                 <div className="flex space-x-3">
                   {[
@@ -340,7 +340,7 @@ export const Footer: React.FC = () => {
                     </a>
                   ))}
                 </div>
-              </div>
+              {/* </div> */}
             </div>
           </div>
         </div>
