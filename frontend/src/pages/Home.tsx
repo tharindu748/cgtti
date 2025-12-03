@@ -288,7 +288,7 @@ export const Home: React.FC = () => {
             
             {/* Animated Subtitle */}
             <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto opacity-0 animate-fadeInUp" style={{ animationDelay: '0.3s', animationFillMode: 'forwards' }}>
-              <span className="inline-block animate-bounceSlow">✨</span> Connecting Generations of Skilled Professionals Since 1967 <span className="inline-block animate-bounceSlow" style={{ animationDelay: '0.5s' }}>✨</span>
+              <span className="inline-block animate-bounceSlow">✨</span> Connecting Generations of Skilled Professionals Since 1959 <span className="inline-block animate-bounceSlow" style={{ animationDelay: '0.5s' }}>✨</span>
             </p>
             
             {/* Animated CTA Buttons */}

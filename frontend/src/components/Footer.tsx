@@ -60,7 +60,7 @@ export const Footer: React.FC = () => {
     email: 'cgtti@sltnet.lk',
     website: 'www.cgtti.lk',
     alumniEmail: 'alumni@cgtti.lk',
-    founded: 1967
+    founded: 1959
   };
 
   const socialLinks = {
@@ -355,8 +355,8 @@ export const Footer: React.FC = () => {
               </h4>
               <p className="text-gray-300 text-sm">
                 Monday - Friday: 8:30 AM - 4:30 PM<br />
-                Saturday: 9:00 AM - 1:00 PM<br />
-                Sunday: Closed
+                Saturday: 8:30 AM - 4:30 PM<br />
+                Sunday: 8:30 AM - 4:30 PM
               </p>
             </div>
             

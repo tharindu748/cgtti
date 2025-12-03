@@ -39,11 +39,11 @@ export const Sidebar: React.FC = () => {
       icon: <LayoutDashboard className="w-5 h-5" />,
       notification: 3
     },
-    { 
-      path: '/profile', 
-      label: 'My Profile', 
-      icon: <UserCheck className="w-5 h-5" />
-    },
+    // { 
+    //   path: '/profile', 
+    //   label: 'My Profile', 
+    //   icon: <UserCheck className="w-5 h-5" />
+    // },
     { 
       path: '/members', 
       label: 'Members Directory', 

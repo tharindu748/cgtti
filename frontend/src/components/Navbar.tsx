@@ -4,7 +4,7 @@ import {
   Menu, X, LayoutDashboard, LogIn, ChevronDown, 
   User, Bell, Search, Home, Users, Calendar, 
   Image as ImageIcon, Shield, Mail, Globe, 
-  Award, BookOpen, Briefcase, HeartHandshake
+  Award, BookOpen, Briefcase, HeartHandshake, Newspaper
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import cgttiLogo from '../assest/cgtti_logo.jpg'; // Import the logo
@@ -20,6 +20,7 @@ export const Navbar: React.FC = () => {
   const navItems = [
     { path: '/', label: 'Home', icon: Home },
     { path: '/events', label: 'Events', icon: Calendar },
+    { path: '/latest-news', label: 'Latest News', icon: Newspaper },
     { path: '/gallery', label: 'Gallery', icon: ImageIcon },
     { path: '/membership', label: 'Membership', icon: Shield },
     { path: '/about', label: 'About', icon: BookOpen },
