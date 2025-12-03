@@ -288,7 +288,7 @@ export const Footer: React.FC = () => {
                 Subscribe to our newsletter for the latest updates, events, and alumni news.
               </p>
               
-              <form onSubmit={handleSubscribe} className="space-y-3">
+              {/* <form onSubmit={handleSubscribe} className="space-y-3">
                 <div className="relative">
                   <input
                     type="email"
@@ -316,7 +316,7 @@ export const Footer: React.FC = () => {
                     🎉 Thank you for subscribing to our newsletter!
                   </div>
                 )}
-              </form>
+              </form> */}
 
               {/* Social Media */}
               <div className="mt-8">
