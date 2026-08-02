@@ -8,8 +8,8 @@ import {
   getRegistrationStatistics,
   bulkUpdateRegistrations,
   exportRegistrations
-} from './event-registration.controller';
-import { authMiddleware } from '@auth/auth.middleware';
+} from './event-registration.controller.js';
+import { authMiddleware } from '../auth/auth.middleware.js';
 
 const router = express.Router();
 
