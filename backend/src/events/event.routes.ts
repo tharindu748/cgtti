@@ -74,7 +74,8 @@ import {
   publishEvent,
   cancelEvent
 } from "./event.controller.js";
-import { authMiddleware } from '@auth/auth.middleware.js';
+import { authMiddleware } from '../auth/auth.middleware.js';
+// import { AuthRequest } from '../auth/auth.middleware.js';
 
 const router = express.Router();
 
