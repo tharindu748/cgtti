@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import { AuthRequest } from '@auth/auth.middleware';
+
 
 const prisma = new PrismaClient();
 
@@ -113,8 +114,10 @@ export const createEvent = async (req: AuthRequest, res: Response) => {
       organizerName: eventData.organizerName?.trim() || 'CGTTI Alumni Association',
       organizerEmail: eventData.organizerEmail?.trim() || userEmail,
       organizerPhone: eventData.organizerPhone?.trim(),
-      agenda: eventData.agenda ? JSON.stringify(eventData.agenda) : null,
-      speakers: eventData.speakers ? JSON.stringify(eventData.speakers) : null,
+      // agenda: eventData.agenda ? JSON.stringify(eventData.agenda) : null,
+      // speakers: eventData.speakers ? JSON.stringify(eventData.speakers) : null,
+      agenda: eventData.agenda? eventData.agenda: Prisma.JsonNull,
+      speakers: eventData.speakers? eventData.speakers: Prisma.JsonNull,
       createdBy: userEmail,
       updatedBy: userEmail
     };
@@ -222,8 +225,10 @@ export const updateEvent = async (req: AuthRequest, res: Response) => {
       organizerName: eventData.organizerName?.trim() || existingEvent.organizerName,
       organizerEmail: eventData.organizerEmail?.trim() || existingEvent.organizerEmail,
       organizerPhone: eventData.organizerPhone?.trim(),
-      agenda: eventData.agenda ? JSON.stringify(eventData.agenda) : existingEvent.agenda,
-      speakers: eventData.speakers ? JSON.stringify(eventData.speakers) : existingEvent.speakers,
+      // agenda: eventData.agenda ? JSON.stringify(eventData.agenda) : existingEvent.agenda,
+      // speakers: eventData.speakers ? JSON.stringify(eventData.speakers) : existingEvent.speakers,
+      agenda: eventData.agenda? eventData.agenda : existingEvent.agenda ?? Prisma.JsonNull,
+      speakers: eventData.speakers? eventData.speakers : existingEvent.speakers ?? Prisma.JsonNull,
       updatedBy: userEmail,
       updatedAt: new Date()
     };
@@ -362,8 +367,10 @@ export const duplicateEvent = async (req: AuthRequest, res: Response) => {
         organizerName: existingEvent.organizerName,
         organizerEmail: existingEvent.organizerEmail,
         organizerPhone: existingEvent.organizerPhone,
-        agenda: existingEvent.agenda,
-        speakers: existingEvent.speakers,
+        // agenda: existingEvent.agenda,
+        // speakers: existingEvent.speakers,
+        agenda: existingEvent.agenda ?? Prisma.JsonNull,
+        speakers: existingEvent.speakers ?? Prisma.JsonNull,
         createdBy: userEmail,
         updatedBy: userEmail
       }
@@ -374,13 +381,13 @@ export const duplicateEvent = async (req: AuthRequest, res: Response) => {
       message: 'Event duplicated successfully',
       event: duplicatedEvent
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Failed to duplicate event:', error);
     res.status(500).json({ 
       error: 'Failed to duplicate event',
       details: error.message 
     });
-  }
+  }   
 };
 
 // Get event categories
@@ -400,7 +407,7 @@ export const getEventCategories = async (req: Request, res: Response) => {
     ];
 
     res.json(categories);
-  } catch (error) {
+  } catch (error : any) {
     console.error('Failed to fetch categories:', error);
     res.status(500).json({ error: 'Failed to fetch categories' });
   }
@@ -416,7 +423,7 @@ export const getEventTypes = async (req: Request, res: Response) => {
     ];
 
     res.json(types);
-  } catch (error) {
+  } catch (error : any) {
     console.error('Failed to fetch event types:', error);
     res.status(500).json({ error: 'Failed to fetch event types' });
   }
@@ -436,7 +443,7 @@ export const uploadEventImage = async (req: AuthRequest, res: Response) => {
     // Validate URL
     try {
       new URL(imageUrl);
-    } catch (error) {
+    } catch (error : any) {
       return res.status(400).json({ error: 'Invalid URL format' });
     }
 
@@ -451,7 +458,7 @@ export const uploadEventImage = async (req: AuthRequest, res: Response) => {
       message: 'Image uploaded successfully',
       imageUrl
     });
-  } catch (error) {
+  } catch (error : any) {
     console.error('Failed to upload image:', error);
     res.status(500).json({ 
       error: 'Failed to upload image',
