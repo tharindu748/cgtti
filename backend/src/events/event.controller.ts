@@ -223,12 +223,21 @@ export const cancelEvent = async (req: AuthRequest, res: Response) => {
     const { reason } = req.body;
     const userId = req.user?.id || 'system';
 
+    const existingEvent = await prisma.event.findUnique({
+      where: { id }
+    });
+
+    if (!existingEvent) {
+      return res.status(404).json({
+        error: 'Event not found'
+      });
+    }
+
     const event = await prisma.event.update({
       where: { id },
       data: {
         status: 'CANCELLED',
         updatedBy: userId,
-        // Store cancellation reason in description
         description: `${existingEvent.description}\n\nCANCELLED: ${reason}`
       }
     });
@@ -372,7 +381,7 @@ export const registerForEvent = async (req: Request, res: Response) => {
     // TODO: Send confirmation email
 
     res.status(201).json(registration);
-  } catch (error) {
+  } catch (error : any) {
     console.error('Failed to register for event:', error);
     if (error.code === 'P2002') {
       return res.status(400).json({ error: 'Member already registered for this event' });

@@ -44,19 +44,36 @@
 
 
 import express from 'express';
+// import {
+//   getEvents,
+//   getEventById,
+//   createEvent,
+//   updateEvent,
+//   deleteEvent,
+//   duplicateEvent,
+//   getEventCategories,
+//   getEventTypes,
+//   uploadEventImage,
+//   publishEvent,
+//   cancelEvent
+// } from './event-create.controller';
 import {
-  getEvents,
-  getEventById,
   createEvent,
   updateEvent,
   deleteEvent,
   duplicateEvent,
   getEventCategories,
   getEventTypes,
-  uploadEventImage,
+  uploadEventImage
+} from "./event-create.controller";
+
+
+import {
+  getEvents,
+  getEventById,
   publishEvent,
   cancelEvent
-} from './event-create.controller';
+} from "./event.controller";
 import { authMiddleware } from '@auth/auth.middleware';
 
 const router = express.Router();

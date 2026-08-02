@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+// import { PrismaClient } from '@prisma/client';
 import { AuthRequest } from '@auth/auth.middleware';
+import { PrismaClient, RegistrationStatus } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -191,7 +192,7 @@ export const createRegistration = async (req: AuthRequest, res: Response) => {
       data: {
         eventId,
         memberId,
-        status: registrationStatus,
+        status: registrationStatus as RegistrationStatus,
         ticketNumber,
         guests: guests || 0,
         notes,
@@ -220,7 +221,7 @@ export const createRegistration = async (req: AuthRequest, res: Response) => {
         ? 'Added to waitlist due to capacity limit' 
         : 'Registration successful'
     });
-  } catch (error) {
+  } catch (error : any) {
     console.error('Failed to create registration:', error);
     if (error.code === 'P2002') {
       return res.status(400).json({ error: 'Duplicate registration detected' });
