@@ -65,7 +65,7 @@ import {
   getEventCategories,
   getEventTypes,
   uploadEventImage
-} from "./event-create.controller";
+} from "./event-create.controller.js";
 
 
 import {
@@ -73,8 +73,8 @@ import {
   getEventById,
   publishEvent,
   cancelEvent
-} from "./event.controller";
-import { authMiddleware } from '@auth/auth.middleware';
+} from "./event.controller.js";
+import { authMiddleware } from '@auth/auth.middleware.js';
 
 const router = express.Router();
 
