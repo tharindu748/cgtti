@@ -140,7 +140,7 @@ export const createEvent = async (req: AuthRequest, res: Response) => {
       message: 'Event created successfully',
       event
     });
-  } catch (error) {
+  } catch (error : any) {
     console.error('Failed to create event:', error);
     
     if (error.code === 'P2002') {
@@ -249,7 +249,7 @@ export const updateEvent = async (req: AuthRequest, res: Response) => {
       message: 'Event updated successfully',
       event: updatedEvent
     });
-  } catch (error) {
+  } catch (error : any) {
     console.error('Failed to update event:', error);
     res.status(500).json({ 
       error: 'Failed to update event',
@@ -307,7 +307,7 @@ export const deleteEvent = async (req: AuthRequest, res: Response) => {
       success: true,
       message: 'Event deleted successfully'
     });
-  } catch (error) {
+  } catch (error : any) {
     console.error('Failed to delete event:', error);
     res.status(500).json({ 
       error: 'Failed to delete event',
