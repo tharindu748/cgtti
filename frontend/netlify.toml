@@ -1,0 +1,10 @@
+[build]
+  # Point to your frontend subdirectory
+  base = "frontend"
+  
+  # Your build command, for example:
+  command = "npm run build"
+  
+  # Publish directory, which is relative to the base directory (i.e., frontend/)
+  # If your build output is in frontend/dist, just write "dist" here
+  publish = "dist"
