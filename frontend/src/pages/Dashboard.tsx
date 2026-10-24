@@ -13,16 +13,16 @@ export const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // ඔයාගේ backend URL එක මෙතන දාන්න (උදා: http://localhost:5000 හෝ ඔයාගේ Render URL එක)
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        // ඔයාගේ auth token එක localStorage එකෙන් ගන්නවා
-        const token = localStorage.getItem('token');
+        // ඔයාගේ .env එකේ තියෙන නම හරියටම දාන්න
+        const baseUrl = import.meta.env.VITE_API_BASE_URL;
         
-        const response = await fetch(`${API_URL}/dashboard/stats`, {
+        // Token එක ගන්නවා (ඔයාගේ AuthContext එකේ හෝ localStorage එකේ තියෙන නම බලන්න)
+        const token = localStorage.getItem('token'); 
+        
+        const response = await fetch(`${baseUrl}/api/dashboard/stats`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
