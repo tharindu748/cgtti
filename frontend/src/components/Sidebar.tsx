@@ -585,10 +585,11 @@ export const Sidebar: React.FC = () => {
       path: '/settings', 
       label: 'Settings', 
       icon: <Settings className="w-5 h-5" />
-    },
-     ...(user?.role === 'ADMIN' ? [
-    { path: '/admin/events', label: 'Event Management', icon: <Settings className="w-5 h-5" /> } // මෙතන icon එක React node එකක් කළා
-  ] as MenuItem[] : [])
+    }
+  //   },
+  //    ...(user?.role === 'ADMIN' ? [
+  //   { path: '/admin/events', label: 'Event Management', icon: <Settings className="w-5 h-5" /> } // මෙතන icon එක React node එකක් කළා
+  // ] as MenuItem[] : [])
   ];
 
   const toggleSidebar = () => {
