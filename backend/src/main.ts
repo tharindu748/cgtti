@@ -48,6 +48,7 @@ import memberRoutes from './users/member.routes.js';
 import letterRoutes from './letters/letter.routes.js';
 import eventRoutes from './events/event.routes.js';
 import eventRegistrationRoutes from './events/event-registration.routes.js';
+import dashboardRoutes from './dashbord/dashboard.routes.js';
 
 dotenv.config();
 
@@ -74,7 +75,8 @@ app.use('/api/members', memberRoutes);
 app.use('/api/letters', letterRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/event-registrations', eventRegistrationRoutes);
-
+// Import routes
+app.use('/api/dashboard', dashboardRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
