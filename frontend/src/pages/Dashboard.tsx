@@ -22,7 +22,7 @@ export const Dashboard: React.FC = () => {
         // Token එක ගන්නවා (ඔයාගේ AuthContext එකේ හෝ localStorage එකේ තියෙන නම බලන්න)
         const token = localStorage.getItem('token'); 
         
-        const response = await fetch(`${baseUrl}/api/dashboard/stats`, {
+        const response = await fetch(`${baseUrl}/dashboard/stats`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
